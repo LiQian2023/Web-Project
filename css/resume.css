@@ -1,5 +1,5 @@
 /* 页面布局 */
-html,
+/* html,
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -30,9 +30,9 @@ body {
     width: 15%;
     height: 99px;
     border: 1px solid black;
-}
+} */
 /* 清除浮动 */
-#header::after {
+/* #header::after {
     content: "";
     display: table;
     clear: both;
@@ -45,18 +45,18 @@ body {
 #content #exp {
     float: left;
     width: 70%;
-}
+} */
 /* 清除浮动 */
-#content::after {
+/* #content::after {
     content: "";
     display: table;
     clear: both;
 }
 * {
     box-sizing: border-box;
-}
+} */
 /* 响应式布局 */
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
     #header,
     #content #tech_stack,
     #content #exp {
@@ -74,6 +74,164 @@ body {
         width: 148px;
         height: 207px;
     }
+} */
+
+/* 盒子边界起点 */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Version：1.1——> 浮动布局升级为flex布局 */
+/* 页面布局 */
+/* 整体纵向布局 */
+#resume {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+}
+/* 头部和主体横向布局 */
+#header,
+#content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+/* 头部form横向布局 */
+#header .form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+}
+/* form内部纵向布局 */
+#header .form form {
+    display: flex;
+    flex-flow: column nowrap;
+}
+/* call内部纵向布局 */
+#header .form .call {
+    display: flex;
+    flex-flow: column nowrap;
+}
+#header .form .call .row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+/* 头部图像布局 */
+#header .img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 主体横向布局 */
+#content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+/* 技术栈纵向布局 */
+#content #tech_stack {
+    display: flex;
+    flex-flow: column nowrap;
+}
+/* 技术栈内部横向布局 */
+#content #tech_stack .row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+/* 项目经验纵向布局 */
+#content #exp {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/* ----------------------------------------------------------- */
+/* 颜色设置 */
+/* 
+颜色设置可以统一分类设置，如：
+主背景、标题、表单背景、按钮背景、文本颜色等
+主要字体，次要字体等
+*/
+
+/* 网页背景色与字体颜色 */
+html,
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    --font_color: #757575;
+    --main_font_color: #212121;
+    --section_bgcolor: #b3e5fc;
+    /* --可以定义变量
+    --varname: value;
+    意思是定义一个叫varname的变量，其值为 value
+    当完成定义后--varname就是需要使用的特定属性的值
+    后续的引用通过 attr: var(--varname) 完成引用 
+    例如 body{--font_color: #fff}
+    div{color: var(--font_color);}
+    该变量的作用域在自己内部以及内部后代才能使用
+    对于页面的颜色、尺寸设计都可以通过变量完成
+    */
+}
+/* 页面背景色与字体颜色 */
+#resume {
+    background-color: #0288d1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #212121;
+}
+/* 头部信息背景与字体颜色 */
+.info {
+    background-color: #00bcd4;
+    color: #757575;
+}
+#header .row {
+    background-color: #00bcd4;
+    color: #757575;
+}
+#header .img {
+    background-color: var(--section_bgcolor);
+}
+/* 内容主体背景与字体颜色 */
+#content {
+    color: var(--font_color);
+}
+#content h2 {
+    color: var(--main_font_color);
+}
+#content .form {
+    background-color: var(--section_bgcolor);
+}
+
+/* --------------------------------------------------------------------------- */
+
+/* 边距与尺寸设置 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+#resume {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* 头部form */
+#header .form {
+    width: 85%;
+    margin-right: 5px;
+}
+
+/* 头部图片 */
+#header .img {
+    width: 15%;
+    padding: 5px;
 }
 
 /* 头部表单 */
@@ -85,82 +243,70 @@ body {
 }
 
 .info {
-    background-color: grey;
-    border: 1px solid black;
     font-size: 0;
     margin-bottom: 5px;
 }
 #header .row {
     font-size: 0;
     margin-bottom: 5px;
-    background-color: rgb(212, 203, 203);
-}
-#header #row2 {
-    background-color: rgb(153, 145, 145);
 }
 
 #header .dsc,
 #header .value {
-    display: inline-block;
-    vertical-align: middle;
+    /* display: inline-block; */
+    /* vertical-align: middle; */
     font-size: 16px;
 }
-#header .row .dsc {
-    width: 30%;
-}
-#header .row .value {
-    width: 70%;
-}
 
-#header .img {
-    position: relative;
-    /* line-height只能居中文本
-    button 默认为 display: inline-block
-    inline 与 inline-block 不支持margin：auto 控制横向
-    受 text-align 控制横向
-    垂直方向受基线对齐
-    */
-}
-
-#header .img #upload {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* CSS3 transform 属性，用于2d转换 */
-    transform: translate(-50%, -50%);
-    width: 45px;
+/* #header .img #upload { 
+position: absolute;
+top: 50%;
+left: 50%;
+*/
+/* CSS3 transform 属性，用于2d转换 */
+/* transform: translate(-50%, -50%); */
+/* width: 100%;
     height: 45px;
     padding: 0;
-    line-height: 45px;
-}
+} */
 
 /* 内容主体 */
+#content {
+    width: 100%;
+}
+#content #tech_stack {
+    width: 40%;
+}
+#content #exp {
+    width: 60%;
+}
 #tech_stack form {
     width: 100%;
 }
 #content #tech_stack .dsc {
-    width: 30%;
-    display: inline-block;
+    width: 40%;
+    text-align: right;
+    /* display: inline-block; */
 }
 #content #tech_stack .value {
-    width: 70%;
-    display: inline-block;
+    width: 60%;
+    margin: 0 5px;
+    /* display: inline-block; */
 }
 #content #tech_stack .dsc,
 #content #tech_stack .value {
-    vertical-align: middle;
+    /* vertical-align: middle; */
     font-size: 16px;
 }
 #content .row {
     margin-bottom: 5px;
     font-size: 0;
 }
-/* #tech_stack {
-    margin-left: 2.5px;
+
+#content #tech_stack {
+    margin-right: 5px;
 }
-#exp {
-    margin-right: 2.5px;
-} */
+
 #content #exp .value {
     width: 100%;
 }
@@ -171,3 +317,34 @@ body {
     font-size: 18px;
     background-color: yellowgreen;
 }
+/* #header .row .dsc {
+    width: 30%;
+}
+#header .row .value {
+    width: 70%;
+} */
+
+/* #header .img {
+    position: relative;
+    line-height只能居中文本
+    button 默认为 display: inline-block
+    inline 与 inline-block 不支持margin：auto 控制横向
+    受 text-align 控制横向
+    垂直方向受基线对齐
+    
+} */
+
+/* #tech_stack {
+    margin-left: 2.5px;
+}
+#exp {
+    margin-right: 2.5px;
+} */
+
+/* 样式表分区小技巧
+可以按照内容板块进行分类，如：
+头部区域样式
+主体区域样式
+尾部区域样式
+这方便后期维护以及团队开发协同
+*/
