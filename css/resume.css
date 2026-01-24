@@ -1,0 +1,173 @@
+/* 页面布局 */
+html,
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+#resume {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#header .form {
+    float: left;
+    width: 85%;
+    height: 99px;
+    border: 1px solid black;
+}
+#header .img {
+    float: left;
+    width: 15%;
+    height: 99px;
+    border: 1px solid black;
+}
+/* 清除浮动 */
+#header::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#content #tech_stack {
+    float: left;
+    width: 30%;
+}
+#content #exp {
+    float: left;
+    width: 70%;
+}
+/* 清除浮动 */
+#content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+* {
+    box-sizing: border-box;
+}
+/* 响应式布局 */
+@media screen and (max-width: 600px) {
+    #header,
+    #content #tech_stack,
+    #content #exp {
+        width: 100%;
+    }
+    #header .form {
+        width: 75%;
+    }
+    #header .img {
+        width: 71px;
+    }
+}
+@media print and (max-width: 600px) {
+    #header .img {
+        width: 148px;
+        height: 207px;
+    }
+}
+
+/* 头部表单 */
+#nation {
+    width: 20%;
+}
+#name {
+    width: 25%;
+}
+
+.info {
+    background-color: grey;
+    border: 1px solid black;
+    font-size: 0;
+    margin-bottom: 5px;
+}
+#header .row {
+    font-size: 0;
+    margin-bottom: 5px;
+    background-color: rgb(212, 203, 203);
+}
+#header #row2 {
+    background-color: rgb(153, 145, 145);
+}
+
+#header .dsc,
+#header .value {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+}
+#header .row .dsc {
+    width: 30%;
+}
+#header .row .value {
+    width: 70%;
+}
+
+#header .img {
+    position: relative;
+    /* line-height只能居中文本
+    button 默认为 display: inline-block
+    inline 与 inline-block 不支持margin：auto 控制横向
+    受 text-align 控制横向
+    垂直方向受基线对齐
+    */
+}
+
+#header .img #upload {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* CSS3 transform 属性，用于2d转换 */
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    line-height: 45px;
+}
+
+/* 内容主体 */
+#tech_stack form {
+    width: 100%;
+}
+#content #tech_stack .dsc {
+    width: 30%;
+    display: inline-block;
+}
+#content #tech_stack .value {
+    width: 70%;
+    display: inline-block;
+}
+#content #tech_stack .dsc,
+#content #tech_stack .value {
+    vertical-align: middle;
+    font-size: 16px;
+}
+#content .row {
+    margin-bottom: 5px;
+    font-size: 0;
+}
+/* #tech_stack {
+    margin-left: 2.5px;
+}
+#exp {
+    margin-right: 2.5px;
+} */
+#content #exp .value {
+    width: 100%;
+}
+
+#submit button[type="submit"] {
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    background-color: yellowgreen;
+}
