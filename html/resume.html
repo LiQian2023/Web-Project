@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resume</title>
+        <link rel="stylesheet" href="../css/resume.css" />
+    </head>
+    <body>
+        <div id="resume">
+            <div id="header">
+                <div class="form">
+                    <form action="">
+                        <div class="info">
+                            <label for="name" class="dsc">姓名</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="value"
+                            />
+                            <label for="age" class="dsc">年龄</label>
+                            <select id="age" name="age" class="value">
+                                <option value="" selected disabled></option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                            </select>
+                            <label for="nation" class="dsc">户籍</label>
+                            <input
+                                type="text"
+                                id="nation"
+                                name="nation"
+                                class="value"
+                            />
+                        </div>
+                        <div class="call">
+                            <div class="row" id="row1">
+                                <label for="phone" class="dsc">联系方式</label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    class="value"
+                                />
+                            </div>
+                            <div class="row" id="row2">
+                                <label for="email" class="dsc">电子邮箱</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="value"
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="img">
+                    <button id="upload">
+                        <img src="../../learning_html/回到顶部.jpg" alt="" />
+                    </button>
+                </div>
+            </div>
+            <div id="content">
+                <div class="form" id="tech_stack">
+                    <h2>技术栈</h2>
+                    <form action="">
+                        <div class="row">
+                            <label for="front-end" class="dsc">前端技术</label>
+                            <textarea
+                                class="value"
+                                id="front-end"
+                                name="front-end"
+                                placeholder="输入你所掌握的前端技术"
+                            ></textarea>
+                        </div>
+                        <div class="row">
+                            <label for="back-end" class="dsc">后端技术</label>
+                            <textarea
+                                class="value"
+                                id="back-end"
+                                name="back-end"
+                                placeholder="输入你所掌握的后端技术"
+                            ></textarea>
+                        </div>
+                        <div class="row">
+                            <label for="database" class="dsc">数据库技术</label>
+                            <textarea
+                                class="value"
+                                id="database"
+                                name="database"
+                                placeholder="输入你所掌握的数据库技术"
+                            ></textarea>
+                        </div>
+                        <div class="row">
+                            <label for="other" class="dsc">其他技术</label>
+                            <textarea
+                                class="value"
+                                id="other"
+                                name="other"
+                                placeholder="输入你所掌握的其他技术"
+                            ></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="form" id="exp">
+                    <h2>项目经验</h2>
+                    <form action="">
+                        <div class="row">
+                            <label for="project1" class="dsc">项目一</label>
+                            <textarea
+                                class="value"
+                                id="project1"
+                                name="project1"
+                                placeholder="输入你的项目经验"
+                            ></textarea>
+                        </div>
+                    </form>
+                    <h2>教育经历</h2>
+                    <form action="">
+                        <div class="row">
+                            <label for="education" class="dsc">教育经历</label>
+                            <textarea
+                                class="value"
+                                id="education"
+                                name="education"
+                                placeholder="输入你的教育经历"
+                            ></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="submit">
+                <form action="">
+                    <button type="submit" id="submit_btn">提交简历</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
