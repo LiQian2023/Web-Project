@@ -1,0 +1,415 @@
+/* 全局样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* 全局变量 */
+    --color_back: #fdebaa;
+    --color_back_guider: #d5c4bd;
+    --color_back_main: #cddee9;
+    --color_back_footer: #c3c7d1;
+    --color_hover: #f3b9b1;
+    --color_shadow: #c2ceed;
+    --color_font: #000;
+    --color_font2: #eac7b1;
+    --color_card: #f1f1f1;
+    --font_size_content: 16px;
+    --font_size_h6: 20px;
+    --font_size_h5: 24px;
+    --font_size_h4: 28px;
+    --font_size_h3: 32px;
+    --font_size_h2: 36px;
+    --font_size_h1: 40px;
+    --font_size_small: 12px;
+    background-color: var(--color_back);
+}
+
+/* 头部样式 */
+#header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+/* #header #form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+} */
+
+#header button {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+}
+/* 导航样式 */
+.guider {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color_back_guider);
+}
+.guider ul {
+    list-style-type: none;
+    padding: 0;
+}
+.guider dl {
+    margin: 0;
+    padding: 0;
+}
+.guider dd {
+    margin: 0;
+}
+.guider a {
+    text-decoration: none;
+    color: var(--color_font);
+}
+.guider a:hover {
+    color: var(--color_hover);
+}
+.guider a:active {
+    color: var(--color_back_main);
+}
+.guider .list {
+    padding: 5px 0;
+    margin: 0;
+}
+/* 水平导航栏 */
+#h_guider ul {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    font-size: var(--font_size_small);
+}
+#h_guider li {
+    margin: 5px 2.5px;
+    padding: 2.5px;
+}
+
+/* 垂直导航栏 */
+/* #v_l_guider {
+    min-width: 6em;
+} */
+#v_l_guider dl {
+    padding-left: 2.5px;
+}
+#v_l_guider dd {
+    margin-top: 5px;
+}
+#v_l_guider .list {
+    background-color: var(--color_card);
+}
+#v_l_guider .list:first-child {
+    background-color: var(--color_font2);
+}
+/* 
+:first-child 伪元素的语法为：
+对象:first-child 
+这里的对象特指需要选择的对象集，
+如所有的孩子为.list ，所有的列表标题 dt ……
+*/
+/* 右侧下拉菜单导航栏 */
+#v_r_guider ul {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+}
+#v_r_guider .list {
+    background-color: var(--color_font2);
+    margin: 0;
+}
+#v_r_guider li {
+    margin: 1px 0;
+    padding: 5px 0;
+    background-color: var(--color_card);
+}
+/* #v_r_guider tr {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+} */
+#v_r_guider td {
+    margin: 5px;
+    padding: 5px;
+}
+/* 下拉菜单 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    visibility: hidden;
+    position: absolute;
+    right: 100%;
+    top: 0%;
+    background-color: var(--color_back_guider);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: max-content;
+}
+
+.dropdown:hover .text:hover {
+    text-decoration: underline;
+}
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+}
+.dropdown:hover .text {
+    text-decoration: none;
+}
+
+.dropdown-content span {
+    width: 35%;
+    /* text-wrap: none; */
+    white-space: nowrap;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+    margin: 0 5%;
+    /* margin: 0 10%; */
+}
+/* .dropdown-content span:last-child {
+    margin-right: auto;
+} */
+
+.dropdown-content span:hover {
+    text-decoration: underline;
+}
+
+/* 提示工具 */
+/* .tooltip {
+    position: relative;
+    display: inline-block;
+}
+.tooltiptext {
+    visibility: hidden;
+    background-color: var(--color_card);
+    text-align: center;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+}
+.tooltip:hover .text:hover {
+    text-decoration: underline;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.tooltiptext .text {
+    text-decoration: none;
+    若只是用 a 来进行删除，它实际删除的是默认状态下的下划线
+    为了能够让所有的事件响应过程都能删除下划线，则需要通过具体的伪元素实现
+} */
+/* 主体样式 */
+#main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    background-color: var(--color_back_main);
+}
+
+#main .card {
+    background-color: var(--color_card);
+    box-shadow: 5px 5px 5px var(--color_shadow);
+    margin: 5px;
+}
+
+#main .page ul {
+    list-style-type: none;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0 1em;
+}
+#main .page a {
+    text-decoration: none;
+}
+
+/* 底部样式 */
+#footer {
+    background-color: var(--color_back_footer);
+    font-size: var(--font_size_h6);
+}
+#footer ul {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+    list-style-type: none;
+    padding: 0;
+    margin: 2.5px 0 0;
+}
+#footer li {
+    padding: 5px;
+}
+#footer li:hover {
+    background-color: var(--color_hover);
+}
+#footer a {
+    text-decoration: none;
+    color: var(--color_font);
+}
+#footer a:active {
+    color: var(--color_font2);
+}
+
+/* 颜色色系 */
+/* 
+蓝粉色，#6592BC，#88A9C9#EECECF,#E9A9AC#EA838A,#DF5E68.
+蓝绿色，#D5E8F1，#ABD7DF，#CAEBE7,#A9D9BB,#90B4CF，#33BAC，#4FB1B2
+海洋清风#BFDFD2,#51999F,#4198AC,#7BC0C0,#DBCB92,#ECB66C,#EA9E58,#ED8D5A;
+粉彩少女，#B6B3D6,#CFCCE3,#D5D3DE,#D5D1D1,#F6DFD6,#F8B2A2,#F1837A,#E9687A，
+柔和色彩#ED8585#F3A2A2#F6D0CE#A4D6D5#A4D6D5#60B8B5,
+柔和橙绿#f4c4b9#e9947f#9CBEC0#5296AI#12626SA,
+柔和晨光#fdebaa#EAC7B1#CDDEE9#C3C7D1#D5C4BD#C2CEEDD#F3B9B1#f1f1f1 
+*/
+
+/* 响应式布局 */
+/* 菜鸟布局
+width: 1024 三列布局
+width: 768 - 1024 两列布局
+width: 480 一列布局
+*/
+/* 移动端 */
+@media only screen and (max-width: 752px) {
+    .col-pho-0 {
+        display: none;
+    }
+    .col-pho-1 {
+        width: 8.33%;
+    }
+    .col-pho-2 {
+        width: 16.66%;
+    }
+    .col-pho-3 {
+        width: 25%;
+    }
+    .col-pho-4 {
+        width: 33.33%;
+    }
+    .col-pho-5 {
+        width: 41.66%;
+    }
+    .col-pho-6 {
+        width: 50%;
+    }
+    .col-pho-7 {
+        width: 58.33%;
+    }
+    .col-pho-8 {
+        width: 66.66%;
+    }
+    .col-pho-9 {
+        width: 75%;
+    }
+    .col-pho-10 {
+        width: 83.33%;
+    }
+    .col-pho-11 {
+        width: 91.66%;
+    }
+    .col-pho-12 {
+        width: 100%;
+    }
+    #header h1 {
+        font-size: var(--font_size_h4);
+    }
+}
+
+/* 平板 */
+@media only screen and (min-width: 752px) and (max-width: 1024px) {
+    .col-m-0 {
+        display: none;
+    }
+    .col-m-1 {
+        width: 8.33%;
+    }
+    .col-m-2 {
+        width: 16.66%;
+    }
+    .col-m-3 {
+        width: 25%;
+    }
+    .col-m-4 {
+        width: 33.33%;
+    }
+    .col-m-5 {
+        width: 41.66%;
+    }
+    .col-m-6 {
+        width: 50%;
+    }
+    .col-m-7 {
+        width: 58.33%;
+    }
+    .col-m-8 {
+        width: 66.66%;
+    }
+    .col-m-9 {
+        width: 75%;
+    }
+    .col-m-10 {
+        width: 83.33%;
+    }
+    .col-m-11 {
+        width: 91.66%;
+    }
+    .col-m-12 {
+        width: 100%;
+    }
+    #header h1 {
+        font-size: var(--font_size_content);
+    }
+}
+
+/* 桌面 */
+@media only screen and (min-width: 1024px) {
+    .col-0 {
+        display: none;
+    }
+    .col-1 {
+        width: 8.33%;
+    }
+    .col-2 {
+        width: 16.66%;
+    }
+    .col-3 {
+        width: 25%;
+    }
+    .col-4 {
+        width: 33.33%;
+    }
+    .col-5 {
+        width: 41.66%;
+    }
+    .col-6 {
+        width: 50%;
+    }
+    .col-7 {
+        width: 58.33%;
+    }
+    .col-8 {
+        width: 66.66%;
+    }
+    .col-9 {
+        width: 75%;
+    }
+    .col-10 {
+        width: 83.33%;
+    }
+    .col-11 {
+        width: 91.66%;
+    }
+    .col-12 {
+        width: 100%;
+    }
+}
