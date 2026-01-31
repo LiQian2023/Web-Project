@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/Webpage_layout.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <title>菜鸟变成模拟实现</title>
+    </head>
+    <body>
+        <div id="header" class="col-12">
+            <h1 class="col-8 col-m-8 col-pho-11" id="title">
+                Noah 的 Web 前端之旅
+            </h1>
+            <input
+                type="search"
+                name="search"
+                id="search"
+                placeholder="搜索……"
+                class="col-4 col-m-10 col-pho-0"
+                style="font-size: var(--font_size_h6)"
+            />
+            <!-- 若只使用input且父元素用flex布局，其align-items属性值给stretch时，
+            input 会进行纵向平铺拉满，这时是无法通过字体高度进行控制
+            当将其属性值修改为center时，那么搜索框的高度则是由文字高度进行确定 
+            -->
+            <button class="col-0 col-m-2 col-pho-1">
+                <i class="fa fa-align-justify"></i>
+                <!-- <svg
+                    t="1769838130181"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="2182"
+                    width="24"
+                    height="24"
+                    class="col-0 col-m-2 col-pho-1"
+                >
+                    <path
+                        d="M736 352H288a32 32 0 1 1 0-64h448a32 32 0 0 1 0 64z m0 192H288a32 32 0 1 1 0-64h448a32 32 0 0 1 0 64z m0 192H288a32 32 0 0 1 0-64h448a32 32 0 0 1 0 64z"
+                        fill="#202425"
+                        p-id="2183"
+                    ></path>
+                </svg> -->
+                <!-- SVG 可以通过图库来获取对应图标的代码，不需要通过svg标签进行引入 -->
+            </button>
+        </div>
+        <div id="h_guider" class="guider col-12">
+            <div class="col-12 col-m-0 col-pho-0">
+                <ul>
+                    <li class="Web"><a href="#">首页</a></li>
+                    <li class="Web"><a href="#">HTML</a></li>
+                    <li class="Web"><a href="#">JAVASCRIPT</a></li>
+                    <li class="Web"><a href="#">CSS</a></li>
+                    <li class="other"><a href="#">VUE</a></li>
+                    <li class="other"><a href="#">REACT</a></li>
+                    <li class="other"><a href="#">PYTHON3</a></li>
+                    <li class="other"><a href="#">JAVA</a></li>
+                    <li class="other"><a href="#">C</a></li>
+                    <li class="other"><a href="#">C++</a></li>
+                    <li class="other"><a href="#">C#</a></li>
+                    <li class="other"><a href="#">AI</a></li>
+                    <li class="other"><a href="#">GO</a></li>
+                    <li class="other"><a href="#">SQL</a></li>
+                    <li class="other"><a href="#">LINUX</a></li>
+                    <li class="other"><a href="#">VS CODE</a></li>
+                    <li class="other"><a href="#">BOOTST</a></li>
+                    <li class="other"><a href="#">GIT</a></li>
+                    <li class="Web"><a href="#">本地标签</a></li>
+                </ul>
+            </div>
+            <div class="col-0 col-m-12 col-pho-12">
+                <ul>
+                    <li class="Web"><a href="#">首页</a></li>
+                    <li class="Web"><a href="#">HTML</a></li>
+                    <li class="Web"><a href="#">JAVASCRIPT</a></li>
+                    <li class="Web"><a href="#">CSS</a></li>
+                    <li class="Web"><a href="#">本地标签</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="main" class="col-12">
+            <div id="v_l_guider" class="guider col-2 col-m-2 col-pho-0">
+                <dl>
+                    <dt class="list">
+                        <!-- <svg
+                            t="1769854605572"
+                            class="icon"
+                            viewBox="0 0 1024 1024"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            p-id="17231"
+                            width="16"
+                            height="16"
+                        >
+                            <path
+                                d="M970.687282 755.421009c26.926256 0 49.197492 22.10853 49.197492 49.027623 0 27.818579-22.273283 49.928133-49.197492 49.928133H257.885953c-26.909883 0-49.178049-22.107507-49.178049-49.928133 0-26.919093 22.271236-49.027623 49.178049-49.027623h712.801329zM67.615469 176.691211c35.269271 0 63.11855 28.763091 63.118549 63.1032 0 35.269271-27.851325 63.119573-63.118549 63.119573-34.341133 0-63.1032-27.850301-63.1032-63.119573 0.001023-34.340109 28.762067-63.1032 63.1032-63.1032zM257.885953 296.840662c-26.909883 0-49.178049-22.555715-49.178049-49.477878 0-26.924209 22.271236-49.477878 49.178049-49.477878H970.688305c26.926256 0 49.197492 22.553669 49.197492 49.477878 0 26.923186-22.273283 49.477878-49.197492 49.477878H257.885953z m0 296.870338c-26.909883 0-49.178049-22.557762-49.178049-49.480948 0-26.920116 22.271236-49.476855 49.178049-49.476855H970.688305c26.926256 0 49.197492 22.556739 49.197492 49.476855 0 26.924209-22.273283 49.480948-49.197492 49.480948H257.885953zM67.615469 463.47789c35.269271 0 63.11855 27.852348 63.118549 63.116503 0 34.344203-27.851325 63.11855-63.118549 63.11855-34.341133 0-63.1032-28.774347-63.1032-63.11855 0.001023-35.268248 28.762067-63.116503 63.1032-63.116503z m0 285.869796c35.269271 0 63.11855 28.780487 63.118549 63.120597 0 35.269271-27.851325 63.1032-63.118549 63.1032-34.341133 0-63.1032-27.833929-63.1032-63.100131 0.001023-34.343179 28.762067-63.123666 63.1032-63.123666z"
+                                fill=""
+                                p-id="17232"
+                            ></path>
+                        </svg> -->
+                        <span class="fa fa-list"></span>
+                        CSS 教程
+                    </dt>
+                    <dd><a href="#">CSS 教程</a></dd>
+                    <dd><a href="#">CSS 简介</a></dd>
+                    <dd><a href="#">CSS 编辑器</a></dd>
+                    <dd><a href="#">CSS AI编程</a></dd>
+                    <dd><a href="#">CSS 语法</a></dd>
+                    <dt class="list">CSS3 教程</dt>
+                    <dd><a href="#">CSS3 教程</a></dd>
+                    <dd><a href="#">CSS3 简介</a></dd>
+                    <dd><a href="#">CSS3 边框</a></dd>
+                    <dd><a href="#">CSS3 圆角</a></dd>
+                    <dd><a href="#">CSS3 背景</a></dd>
+                    <dt class="list">CSS 响应式设计</dt>
+                    <dd><a href="#">Viewport</a></dd>
+                    <dd><a href="#">网络视图</a></dd>
+                    <dd><a href="#">媒体查询</a></dd>
+                    <dd><a href="#">图片</a></dd>
+                    <dd><a href="#">视频(Video)</a></dd>
+                    <dt class="list">CSS 参考手册</dt>
+                    <dd><a href="#">CSS 参考手册</a></dd>
+                    <dd><a href="#">CSS 选择器</a></dd>
+                    <dd><a href="#">CSS 语音参考</a></dd>
+                    <dd><a href="#">CSS Web 安全字体</a></dd>
+                    <dd><a href="#">CSS 动画</a></dd>
+                </dl>
+            </div>
+            <div id="content" class="card col-8 col-m-10 col-pho-12">
+                <div id="page1" class="card page">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-arrow-left"></i>前一页
+                                <!-- <svg
+                                    t="1769850141990"
+                                    class="icon"
+                                    viewBox="0 0 1024 1024"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    p-id="14446"
+                                    width="16"
+                                    height="16"
+                                >
+                                    <path
+                                        d="M832.731429 476.416H282.112l329.618286-286.134857a7.460571 7.460571 0 0 0-4.900572-13.165714h-83.382857a15.067429 15.067429 0 0 0-9.874286 3.584L157.988571 489.398857a30.134857 30.134857 0 0 0 0 45.494857l357.778286 310.491429a7.204571 7.204571 0 0 0 4.827429 1.901714h86.125714a7.460571 7.460571 0 0 0 4.937143-13.202286l-329.508572-286.134857h550.656a7.533714 7.533714 0 0 0 7.497143-7.533714v-56.429714a7.533714 7.533714 0 0 0-7.497143-7.533715v-0.036571z"
+                                        fill="#1B1C1F"
+                                        p-id="14447"
+                                    ></path>
+                                </svg> -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <!-- <svg
+                                    t="1769850173440"
+                                    class="icon"
+                                    viewBox="0 0 1024 1024"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    p-id="14596"
+                                    width="16"
+                                    height="16"
+                                >
+                                    <path
+                                        d="M841.984 489.325714L486.4 180.809143a15.104 15.104 0 0 0-9.874286-3.657143h-83.309714a7.460571 7.460571 0 0 0-4.864 13.165714l329.581714 286.134857H167.168a7.533714 7.533714 0 0 0-7.533714 7.497143v56.466286c0 4.132571 3.364571 7.533714 7.533714 7.533714h550.656l-329.618286 286.098286a7.460571 7.460571 0 0 0 4.937143 13.165714h86.162286a6.838857 6.838857 0 0 0 4.790857-1.828571l357.888-310.381714a30.208 30.208 0 0 0 0-45.604572z"
+                                        fill="#1B1C1F"
+                                        p-id="14597"
+                                    ></path>
+                                </svg> -->
+                                后一页<i class="fa fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="text" class="card">
+                    <h1>需求文档</h1>
+                    <h2>页面布局</h2>
+                    页面分为四部分：<br />
+                    <ol>
+                        <li>页面头部</li>
+                        <li>页面导航</li>
+                        <li>页面主体</li>
+                        <li>页面底部</li>
+                    </ol>
+                    整个网页使用的响应式布局，通过媒体请求
+                    <code>@media</code> 规则来实现响应式页面 <br />
+                    <h2>核心模块</h2>
+                    在不同的页面部分，所具备的模块也是不相同的：<br />
+                    <dl>
+                        <dt>页面头部</dt>
+                        <dd>
+                            logo模块：这里我们实现采用
+                            <b>Noah 的 Web 前端之旅</b>
+                        </dd>
+                        <dd>查询模块：通过搜索框，实现搜索功能</dd>
+                        <dd>菜单模块：通过按钮实现下拉菜单</dd>
+                        <dt>页面导航</dt>
+                        <dd>横向导航栏</dd>
+                        <dt>页面主体</dt>
+                        <dd>左侧导航：左侧导航栏为正常的垂直导航栏</dd>
+                        <dd>
+                            内容主体：这里就是正常的页面内容包括3个部分：
+                            <dl>
+                                <dd>内容介绍部分</dd>
+                                <dd>分页栏</dd>
+                                <dd>笔记分享与展示</dd>
+                            </dl>
+                        </dd>
+                        <dd>
+                            右侧下拉导航：右侧导航栏为隐藏式下拉导航，或者说是提示工具导航
+                        </dd>
+                        <dt>页面底部</dt>
+                        <dd>
+                            正常的页面备注，如备案号等，这里我们在该部分展示个人的博客、git仓库等信息
+                        </dd>
+                    </dl>
+                    <h2>实现步骤</h2>
+                    采取先整体后局部的设计思路：<br />
+                    <ol>
+                        <li>实现页面的整体布局</li>
+                        <li>实现每一部分的模块内容</li>
+                        <li>进行每一部分的样式调整</li>
+                        <li>实现响应式</li>
+                    </ol>
+                    <h2>设计流程</h2>
+                    <h3>整体布局的实现</h3>
+                    整体的布局我们所采取的方式为 <code>div布局</code> 通过四个
+                    <code>div</code> 容器在 <code>body</code> 内划分出四个空间
+                    <br />
+                    对每一部分设置具体的 <code>id/class……</code> <br />
+                    <h3>模块的实现</h3>
+                    <h4>头部模块</h4>
+                    头部有3个模块：logo、搜索栏、下拉菜单 <br />
+                    logo 的实现我们借助 <code>h1</code> <br />
+                    搜索栏我们借助 <code>input</code> <br />
+                    下拉菜单我们借助 <code>button</code>
+                    <h4>导航栏</h4>
+                    对于页面的横向导航廊，我们还是采取 <code>ul</code> 来实现
+                    <br />
+                    <h4>主体模块</h4>
+                    主体模块中我们需要实现5大模块
+                    <ol>
+                        <li>
+                            左侧垂直导航栏: 这里我们依旧采用
+                            <code>ul</code> 实现
+                        </li>
+                        <li>内容主体模块</li>
+                        <li>分页栏 这里我们借助 <code>ul</code> 实现</li>
+                        <li>
+                            笔记展示与分享 这里我们可以借助<code>input</code>
+                            来实现
+                        </li>
+                        <li>
+                            右侧提示工具导航廊 这里我们借助
+                            <code>ul</code> 来实现
+                        </li>
+                    </ol>
+                    <h4>底部模块</h4>
+                    这一部分我们直接采用 <code>ul</code> 来实现 <br />
+                    <h4>小结</h4>
+                    整体的内容模块并不难，需要用到的内容也不多，所以先完成第一步
+                    <br />
+                    <h2>响应式页面需求</h2>
+                    响应式页面，在具体设计的过程中，可以通过不同屏幕的大小来使用不同的类名以此来进行区分：<br />
+                    比如：<br />
+                    <ul>
+                        <li>
+                            对于手机端：主体内容不管什么元素，最好都进行铺满，即纵向排列各个元素
+                        </li>
+                        <li>
+                            对于平板端：主体内容则可以进行一定程度的布局，如菜鸟的二列布局
+                        </li>
+                        <li>
+                            对于客户端：主体内容则需要进行完整的布局展示，如菜鸟的三列布局
+                        </li>
+                    </ul>
+                    正是因为在三种不同的场景下，需要用到对应的布局效果，因此我们可以通过给同一个元素定义两到三种类名
+                    <br />
+                    <ol>
+                        <li>
+                            手机端：由于所有尺寸均需铺满屏幕，因此我们可以通过属性值选择器来实现，也可以通过类选择器来实现
+                        </li>
+                        <ul>
+                            <li>
+                                属性与值选择器：<code>[class*="col-"]</code>
+                                选择所有以
+                                <code>"col-"</code> 为前缀的类，并进行尺寸设置
+                            </li>
+                            <li>
+                                类选择器：<code>.col-p-*</code>
+                                通过对不同的元素定义不同的类名，再对每一个类名进行尺寸的设置
+                            </li>
+                        </ul>
+                        <li>
+                            平板端：在平板端由于屏幕尺寸要大于手机端，因此可以实现二列布局，也就是所当前的所有元素需要有要给特定的布局尺寸，这里我们可以定义一个新的类名
+                        </li>
+                        <li>
+                            客户端：客户端的屏幕尺寸还要更大，因此所有的元素还需要再设置一个新的布局尺寸，这里我们可以定义一个新的类名
+                        </li>
+                    </ol>
+                    按照这种思路，那对于一个 div
+                    标签，我们就可以将其设置两到三种类名：<br />
+                    <dl>
+                        <dt>两种类名</dt>
+                        <dd>手机端：通过属性与值选择器进行选择</dd>
+                        <dd>
+                            平板端：<code>class="col-m-*"</code> 即column mobile
+                            ……
+                        </dd>
+                        <dd>客户端：<code>class-"col-"</code>即column ……</dd>
+                        <dt>三种类名</dt>
+                        <dd>手机端：<code>class-"col-pho-*</code></dd>
+                        <dd>平板端：<code>class="col-pad-*</code></dd>
+                        <dd>客户端：<code>class-"col-*"</code></dd>
+                    </dl>
+                </div>
+                <div id="page2" class="card page">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-arrow-left"></i>前一页
+                                <!-- <svg
+                                    t="1769850141990"
+                                    class="icon"
+                                    viewBox="0 0 1024 1024"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    p-id="14446"
+                                    width="16"
+                                    height="16"
+                                >
+                                    <path
+                                        d="M832.731429 476.416H282.112l329.618286-286.134857a7.460571 7.460571 0 0 0-4.900572-13.165714h-83.382857a15.067429 15.067429 0 0 0-9.874286 3.584L157.988571 489.398857a30.134857 30.134857 0 0 0 0 45.494857l357.778286 310.491429a7.204571 7.204571 0 0 0 4.827429 1.901714h86.125714a7.460571 7.460571 0 0 0 4.937143-13.202286l-329.508572-286.134857h550.656a7.533714 7.533714 0 0 0 7.497143-7.533714v-56.429714a7.533714 7.533714 0 0 0-7.497143-7.533715v-0.036571z"
+                                        fill="#1B1C1F"
+                                        p-id="14447"
+                                    ></path>
+                                </svg> -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <!-- <svg
+                                    t="1769850173440"
+                                    class="icon"
+                                    viewBox="0 0 1024 1024"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    p-id="14596"
+                                    width="16"
+                                    height="16"
+                                >
+                                    <path
+                                        d="M841.984 489.325714L486.4 180.809143a15.104 15.104 0 0 0-9.874286-3.657143h-83.309714a7.460571 7.460571 0 0 0-4.864 13.165714l329.581714 286.134857H167.168a7.533714 7.533714 0 0 0-7.533714 7.497143v56.466286c0 4.132571 3.364571 7.533714 7.533714 7.533714h550.656l-329.618286 286.098286a7.460571 7.460571 0 0 0 4.937143 13.165714h86.162286a6.838857 6.838857 0 0 0 4.790857-1.828571l357.888-310.381714a30.208 30.208 0 0 0 0-45.604572z"
+                                        fill="#1B1C1F"
+                                        p-id="14597"
+                                    ></path>
+                                </svg> -->
+                                后一页<i class="fa fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="note" class="card">
+                    <input type="text" placeholder="记录笔记" />
+                </div>
+            </div>
+            <div id="v_r_guider" class="guider col-2 col-m-0 col-pho-0">
+                <ul class="col-12">
+                    <li class="list"><i class="fa fa-list"></i>分类导航</li>
+                    <li class="dropdown">
+                        <span class="text">HTML/CSS</span>
+                        <div class="dropdown-content">
+                            <span title="HTML 教程">HTML 教程</span>
+                            <span title="HTML5 教程">HTML5 教程</span>
+                            <span title="CSS 教程">CSS 教程</span>
+                            <span title="CSS3 教程">CSS3 教程</span>
+                            <span title="TailWind CSS 教程"
+                                >TailWind CSS 教程</span
+                            >
+                            <!-- 
+                            <table>
+                                <tr>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >HTML 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">HTML 教程</span>
+                                        </div>
+                                    </td>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >HTML5 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">HTML5 教程</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >CSS 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">CSS 教程</span>
+                                        </div>
+                                    </td>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >CSS3 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">CSS3 教程</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table> 
+                            -->
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <span class="text">HTML/CSS</span>
+                        <div class="dropdown-content">
+                            <span title="HTML 教程">HTML 教程</span>
+                            <span title="HTML5 教程">HTML5 教程</span>
+                            <span title="CSS 教程">CSS 教程</span>
+                            <span title="CSS3 教程">CSS3 教程</span>
+                            <span title="TailWind CSS 教程"
+                                >TailWind CSS 教程</span
+                            >
+                            <!-- <table>
+                                <tr>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >HTML 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">HTML 教程</span>
+                                        </div>
+                                    </td>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >HTML5 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">HTML5 教程</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >CSS 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">CSS 教程</span>
+                                        </div>
+                                    </td>
+                                    <td class="tooltip">
+                                        <a href="#"
+                                            ><span class="text"
+                                                >CSS3 教程</span
+                                            ></a
+                                        >
+                                        <div class="tooltiptext">
+                                            <span class="dsc">CSS3 教程</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="footer" class="col-12 col-m-12 col-pho-12">
+            <ul>
+                <li>
+                    CSDN博客地址：<a
+                        href="https://blog.csdn.net/2301_79458548"
+                        target="_blank"
+                        >蒙奇D索大: https://blog.csdn.net/2301_79458548</a
+                    >
+                </li>
+                <li>
+                    51CTO博客地址：<a
+                        href="https://blog.51cto.com/u_16231477"
+                        target="_blank"
+                        >蒙奇D索隆: https://blog.51cto.com/u_16231477</a
+                    >
+                </li>
+                <li>
+                    腾讯云社区博客地址：<a
+                        href="https://cloud.tencent.com/developer/user/10787339"
+                        target="_blank"
+                        >蒙奇D索隆:
+                        https://cloud.tencent.com/developer/user/10787339</a
+                    >
+                </li>
+                <li>
+                    gitee仓库地址：<a
+                        href="https://gitee.com/Li_2023-9-13"
+                        target="_blank"
+                        >小李爱编码: https://gitee.com/Li_2023-9-13</a
+                    >
+                </li>
+                <li id="f_li">
+                    github仓库地址：<a
+                        href="https://github.com/LiQian2023"
+                        target="_blank"
+                        >LiQian2023: https://github.com/LiQian2023</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
