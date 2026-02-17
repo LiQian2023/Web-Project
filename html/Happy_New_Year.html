@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>诗词烟花拜年系统 Ultimate</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+        <style>
+            body {
+                margin: 0;
+                background: black;
+                font-family: serif;
+                color: gold;
+                text-align: center;
+                overflow-x: hidden;
+            }
+
+            #bgFireworks {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: -1;
+            }
+
+            #container {
+                padding: 40px 20px;
+            }
+
+            input {
+                padding: 10px;
+                margin: 10px;
+                font-size: 16px;
+            }
+
+            button {
+                padding: 10px 20px;
+                margin: 10px;
+                font-size: 16px;
+            }
+
+            #blessing {
+                margin-top: 30px;
+                font-size: 22px;
+                line-height: 1.8;
+                color: white;
+                max-width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="bgFireworks"></canvas>
+
+        <div id="container">
+            <h1 id="title"></h1>
+
+            <input id="nameInput" placeholder="输入名字（可选）" />
+            <br />
+            <button onclick="updateBlessing()">生成祝福</button>
+            <button onclick="downloadCard()">生成分享卡片</button>
+
+            <div id="blessing"></div>
+        </div>
+
+        <audio id="boomSound" src="../music/烟花音效.mp4"></audio>
+
+        <script>
+            // ================= 农历 =================
+
+            function getLunarInfo() {
+                const solar = Solar.fromDate(new Date());
+                const lunar = solar.getLunar();
+                return {
+                    month: lunar.getMonth(),
+                    day: lunar.getDay(),
+                    dayStr: lunar.getDayInChinese(),
+                    animal: lunar.getYearShengXiao(),
+                };
+            }
+
+            // ================= 诗词祝福 =================
+
+            function generatePoeticBlessing(lunar, name) {
+                const { month, day, animal } = lunar;
+
+                const timeWords = ["岁首", "新岁", "春序", "良辰", "岁华"];
+                const sceneWords = [
+                    "烟火",
+                    "灯市",
+                    "梅影",
+                    "春风",
+                    "瑞雪",
+                    "爆竹",
+                ];
+                const wishWords = [
+                    "万象更新",
+                    "福泽绵延",
+                    "喜乐长存",
+                    "山河无恙",
+                    "吉星长照",
+                    "前路生辉",
+                ];
+
+                const t =
+                    timeWords[Math.floor(Math.random() * timeWords.length)];
+                const s =
+                    sceneWords[Math.floor(Math.random() * sceneWords.length)];
+                const w =
+                    wishWords[Math.floor(Math.random() * wishWords.length)];
+
+                let base;
+
+                if (month === 1) {
+                    if (day === 1) {
+                        base = `${t}初启，${s}满城。愿${animal}年${w}。`;
+                    } else if (day === 15) {
+                        base = `灯火千门，月华如昼。愿${w}。`;
+                    } else {
+                        base = `春意渐浓，${s}微暖。愿${w}。`;
+                    }
+                } else {
+                    base = `${animal}年将至，${s}微明。愿${w}。`;
+                }
+
+                if (!name) return base;
+
+                const mode = Math.floor(Math.random() * 3);
+
+                if (mode === 0) return `愿${name}，${base}`;
+                if (mode === 1) return base.replace("愿", `愿${name} `);
+                return `${base}——赠${name}`;
+            }
+
+            function updateBlessing() {
+                const lunar = getLunarInfo();
+                const name = document.getElementById("nameInput").value.trim();
+                const blessing = generatePoeticBlessing(lunar, name);
+
+                document.getElementById("title").innerText =
+                    `${lunar.animal}年 · 农历${lunar.dayStr}`;
+                document.getElementById("blessing").innerText = blessing;
+            }
+
+            updateBlessing();
+
+            // ================= 烟花系统 =================
+
+            const bgCanvas = document.getElementById("bgFireworks");
+            const bgCtx = bgCanvas.getContext("2d");
+
+            function resize() {
+                bgCanvas.width = window.innerWidth;
+                bgCanvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener("resize", resize);
+
+            let fireworks = [];
+            let particles = [];
+
+            class Firework {
+                constructor() {
+                    this.x = Math.random() * bgCanvas.width;
+                    this.y = bgCanvas.height;
+                    this.targetY = Math.random() * bgCanvas.height * 0.5;
+                    this.speed = 6;
+                }
+                update() {
+                    this.y -= this.speed;
+                    particles.push(new Particle(this.x, this.y, true));
+                    if (this.y <= this.targetY) {
+                        explode(this.x, this.y);
+                        return false;
+                    }
+                    return true;
+                }
+                draw() {
+                    bgCtx.fillStyle = "gold";
+                    bgCtx.beginPath();
+                    bgCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                    bgCtx.fill();
+                }
+            }
+
+            class Particle {
+                constructor(x, y, isTrail = false) {
+                    this.x = x;
+                    this.y = y;
+                    this.isTrail = isTrail;
+                    this.speedX = (Math.random() - 0.5) * 6;
+                    this.speedY = (Math.random() - 0.5) * 6;
+                    this.alpha = 1;
+                    this.gravity = 0.05;
+                    this.color = isTrail
+                        ? "rgba(255,215,0,0.8)"
+                        : `hsl(${Math.random() * 360},100%,60%)`;
+                }
+                update() {
+                    this.speedY += this.gravity;
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.alpha -= this.isTrail ? 0.04 : 0.015;
+                    return this.alpha > 0;
+                }
+                draw() {
+                    bgCtx.globalAlpha = this.alpha;
+                    bgCtx.fillStyle = this.color;
+                    bgCtx.beginPath();
+                    bgCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                    bgCtx.fill();
+                    bgCtx.globalAlpha = 1;
+                }
+            }
+
+            function explode(x, y) {
+                const boom = document.getElementById("boomSound");
+                boom.currentTime = 0;
+                boom.play().catch(() => {});
+                for (let i = 0; i < 80; i++) {
+                    particles.push(new Particle(x, y, false));
+                }
+            }
+
+            function animate() {
+                bgCtx.fillStyle = "rgba(0,0,0,0.2)";
+                bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+                fireworks = fireworks.filter((f) => {
+                    const alive = f.update();
+                    f.draw();
+                    return alive;
+                });
+
+                particles = particles.filter((p) => {
+                    const alive = p.update();
+                    p.draw();
+                    return alive;
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            setInterval(() => fireworks.push(new Firework()), 1500);
+            animate();
+
+            document.body.addEventListener(
+                "click",
+                () => {
+                    document
+                        .getElementById("boomSound")
+                        .play()
+                        .catch(() => {});
+                },
+                { once: true },
+            );
+
+            // ================= 高清分享卡片 =================
+
+            function createHDCanvas(w, h) {
+                const dpr = window.devicePixelRatio || 1;
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = w * dpr;
+                canvas.height = h * dpr;
+                canvas.style.width = w + "px";
+                canvas.style.height = h + "px";
+                ctx.scale(dpr, dpr);
+                return { canvas, ctx };
+            }
+
+            function drawMultilineText(ctx, text, x, y, maxWidth, lineHeight) {
+                const chars = text.split("");
+                let line = "";
+                let lines = [];
+                for (let i = 0; i < chars.length; i++) {
+                    const test = line + chars[i];
+                    if (ctx.measureText(test).width > maxWidth) {
+                        lines.push(line);
+                        line = chars[i];
+                    } else {
+                        line = test;
+                    }
+                }
+                lines.push(line);
+                lines.forEach((l, i) => ctx.fillText(l, x, y + i * lineHeight));
+            }
+
+            function generateShareURL() {
+                const name = document.getElementById("nameInput").value.trim();
+                return `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(name)}`;
+            }
+
+            async function downloadCard() {
+                const title = document.getElementById("title").innerText;
+                const blessing = document.getElementById("blessing").innerText;
+
+                const { canvas, ctx } = createHDCanvas(900, 1600);
+
+                const gradient = ctx.createLinearGradient(0, 0, 0, 1600);
+                gradient.addColorStop(0, "#8B0000");
+                gradient.addColorStop(1, "#2c0000");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 900, 1600);
+
+                // 静态烟花装饰
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 40; j++) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const radius = Math.random() * 150;
+                        const x = 450 + Math.cos(angle) * radius;
+                        const y = 400 + Math.sin(angle) * radius;
+                        ctx.fillStyle = `hsla(${Math.random() * 360},100%,60%,0.8)`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                ctx.fillStyle = "gold";
+                ctx.font = "bold 70px serif";
+                ctx.textAlign = "center";
+                ctx.fillText(title, 450, 200);
+
+                ctx.strokeStyle = "gold";
+                ctx.beginPath();
+                ctx.moveTo(200, 260);
+                ctx.lineTo(700, 260);
+                ctx.stroke();
+
+                ctx.font = "48px serif";
+                ctx.fillStyle = "white";
+                drawMultilineText(ctx, blessing, 450, 350, 700, 80);
+
+                const qrData = await QRCode.toDataURL(generateShareURL(), {
+                    width: 200,
+                });
+                const img = new Image();
+                img.src = qrData;
+                await new Promise((res) => (img.onload = res));
+                ctx.drawImage(img, 350, 1150, 200, 200);
+
+                ctx.font = "30px serif";
+                ctx.fillStyle = "#ccc";
+                ctx.fillText("扫码领取专属祝福", 450, 1420);
+
+                const link = document.createElement("a");
+                link.download = "诗词烟花祝福卡.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            }
+        </script>
+    </body>
+</html>
