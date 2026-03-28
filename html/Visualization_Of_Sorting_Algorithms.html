@@ -10,30 +10,48 @@
         <title>排序算法可视化</title>
     </head>
     <body>
-        <header class="part">
+        <header class="header">
             <h1>排序算法可视化</h1>
         </header>
-        <nav class="part">
+        <nav class="nav h_nav">
             <ul>
                 <li><a href="#bubble">冒泡排序</a></li>
                 <li><a href="#insertion">插入排序</a></li>
                 <li><a href="#selection">选择排序</a></li>
             </ul>
         </nav>
-        <main class="part">
-            <nav>
+        <main class="main">
+            <nav class="nav v_nav l_nav">
                 <ul>
                     <li><a href="#bubble">冒泡排序</a></li>
                     <li><a href="#insertion">插入排序</a></li>
                     <li><a href="#selection">选择排序</a></li>
                 </ul>
             </nav>
-            <section>
+            <section class="content">
                 <section class="createData" id="createData">
-                    <input type="text" id="sizeInput" />
+                    <div>
+                        <label for="sizeInput">size = </label>
+                        <input
+                            type="text"
+                            id="sizeInput"
+                            name="sizeInput"
+                            placeholder="请输入数组大小..."
+                        />
+                    </div>
+                    <div>
+                        <label for="time">gap = </label>
+                        <input
+                            type="text"
+                            id="time"
+                            name="time"
+                            placeholder="请输入间隔时间,默认为1000ms..."
+                        />
+                        <label for="time">ms</label>
+                    </div>
                     <button class="create">生成数组</button>
-                    <div class="visualization" id="array-visualization"></div>
                 </section>
+                <div class="visualization" id="array-visualization"></div>
                 <section class="sort" id="bubble">
                     <h2>冒泡排序</h2>
                     <p>
@@ -62,8 +80,18 @@
                         id="selection-visualization"
                     ></div>
                 </section>
+                <section class="sort" id="performance">
+                    <h2>算法性能比较</h2>
+                    <button class="start" data-type="performance">
+                        开始排序
+                    </button>
+                    <div
+                        class="visualization"
+                        id="performance-visualization"
+                    ></div>
+                </section>
             </section>
-            <nav>
+            <nav class="nav v_nav r_nav">
                 <ul>
                     <li><a href="#bubble">冒泡排序</a></li>
                     <li><a href="#insertion">插入排序</a></li>
@@ -71,7 +99,7 @@
                 </ul>
             </nav>
         </main>
-        <footer class="part">
+        <footer class="footer">
             <address>
                 CSDN博客地址：<a
                     href="https://blog.csdn.net/2301_79458548"
