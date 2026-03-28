@@ -1,0 +1,108 @@
+/* 颜色色系 */
+/* 
+蓝粉色，#6592BC，#88A9C9#EECECF,#E9A9AC#EA838A,#DF5E68.
+蓝绿色，#D5E8F1，#ABD7DF，#CAEBE7,#A9D9BB,#90B4CF，#33BAC，#4FB1B2
+海洋清风#BFDFD2,#51999F,#4198AC,#7BC0C0,#DBCB92,#ECB66C,#EA9E58,#ED8D5A;
+粉彩少女，#B6B3D6,#CFCCE3,#D5D3DE,#D5D1D1,#F6DFD6,#F8B2A2,#F1837A,#E9687A，
+柔和色彩#ED8585#F3A2A2#F6D0CE#A4D6D5#A4D6D5#60B8B5,
+柔和橙绿#f4c4b9#e9947f#9CBEC0#5296AI#12626SA,
+柔和晨光#fdebaa#EAC7B1#CDDEE9#C3C7D1#D5C4BD#C2CEEDD#F3B9B1#f1f1f1 
+*/
+:root {
+    --color_background: #4198ac;
+    --color_card: #51999f;
+    --color_shadow: #bfdfd2;
+    --color_active: #ed8d5a;
+    --color_hover: #dbcb92;
+    --color_title: #ecb66c;
+    --color_font_shadow: #7bc0c0;
+    --color_font_content: #ea9e58;
+}
+/* 
+    工程推进流程：结构 -> 布局 -> 美化
+*/
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.part {
+    /* 布局 */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    margin: 5px 0;
+}
+.part:first-child {
+    /* 布局 */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+
+nav ul {
+    /* 布局 */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    list-style-type: none;
+}
+nav a {
+    /* 美化 */
+    text-decoration: none;
+}
+.part:nth-child(3) {
+    /* 布局 */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+}
+.part:nth-child(3) nav:first-child {
+    /* 布局 */
+    margin: 0 1.25px 0 2.5px;
+}
+.part:nth-child(3) section {
+    /* 布局 */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    margin: 0 1.25px;
+}
+.part:nth-child(3) nav:last-child {
+    /* 布局 */
+    margin: 0 2.5px 0 1.25px;
+}
+.part:last-child {
+    /* 布局 */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+}
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .part:nth-child(3) nav {
+        display: none;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .part:nth-child(3) nav:last-child {
+        display: none;
+    }
+}
+@media (min-width: 1024px) {
+    .part:nth-child(3) nav {
+        display: flex;
+    }
+}
