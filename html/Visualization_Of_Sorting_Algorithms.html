@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="../css/Visualization_Of_Sorting_Algorithms.css"
+        />
+        <title>排序算法可视化</title>
+    </head>
+    <body>
+        <header class="part">
+            <h1>排序算法可视化</h1>
+        </header>
+        <nav class="part">
+            <ul>
+                <li><a href="#bubble">冒泡排序</a></li>
+                <li><a href="#insertion">插入排序</a></li>
+                <li><a href="#selection">选择排序</a></li>
+            </ul>
+        </nav>
+        <main class="part">
+            <nav>
+                <ul>
+                    <li><a href="#bubble">冒泡排序</a></li>
+                    <li><a href="#insertion">插入排序</a></li>
+                    <li><a href="#selection">选择排序</a></li>
+                </ul>
+            </nav>
+            <section>
+                <section class="createData" id="createData">
+                    <input type="text" id="sizeInput" />
+                    <button class="create">生成数组</button>
+                    <div class="visualization" id="array-visualization"></div>
+                </section>
+                <section class="sort" id="bubble">
+                    <h2>冒泡排序</h2>
+                    <p>
+                        冒泡排序是一种简单的排序算法，它重复地遍历要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历数列的工作是重复进行直到没有再需要交换，也就是说该数列已经排序完成。
+                    </p>
+                    <button class="start" data-type="bubble">开始排序</button>
+                    <div class="visualization" id="bubble-visualization"></div>
+                </section>
+                <section class="sort" id="insertion">
+                    <h2>插入排序</h2>
+                    <button class="start" data-type="insertion">
+                        开始排序
+                    </button>
+                    <div
+                        class="visualization"
+                        id="insertion-visualization"
+                    ></div>
+                </section>
+                <section class="sort" id="selection">
+                    <h2>选择排序</h2>
+                    <button class="start" data-type="selection">
+                        开始排序
+                    </button>
+                    <div
+                        class="visualization"
+                        id="selection-visualization"
+                    ></div>
+                </section>
+            </section>
+            <nav>
+                <ul>
+                    <li><a href="#bubble">冒泡排序</a></li>
+                    <li><a href="#insertion">插入排序</a></li>
+                    <li><a href="#selection">选择排序</a></li>
+                </ul>
+            </nav>
+        </main>
+        <footer class="part">
+            <address>
+                CSDN博客地址：<a
+                    href="https://blog.csdn.net/2301_79458548"
+                    target="_blank"
+                    >蒙奇D索大: https://blog.csdn.net/2301_79458548</a
+                >
+            </address>
+            <address>
+                51CTO博客地址：<a
+                    href="https://blog.51cto.com/u_16231477"
+                    target="_blank"
+                    >蒙奇D索隆: https://blog.51cto.com/u_16231477</a
+                >
+            </address>
+            <address>
+                腾讯云社区博客地址：<a
+                    href="https://cloud.tencent.com/developer/user/10787339"
+                    target="_blank"
+                    >蒙奇D索隆:
+                    https://cloud.tencent.com/developer/user/10787339</a
+                >
+            </address>
+            <address>
+                gitee仓库地址：<a
+                    href="https://gitee.com/Li_2023-9-13"
+                    target="_blank"
+                    >小李爱编码: https://gitee.com/Li_2023-9-13</a
+                >
+            </address>
+            <address>
+                github仓库地址：<a
+                    href="https://github.com/LiQian2023"
+                    target="_blank"
+                    >LiQian2023: https://github.com/LiQian2023</a
+                >
+            </address>
+        </footer>
+        <script src="../js/Visualization_Of_Sorting_Algorithms.js"></script>
+    </body>
+</html>
