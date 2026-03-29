@@ -10,8 +10,8 @@
 */
 :root {
     --color_background: #4198ac;
-    --color_card: #51999f;
-    --color_shadow: #bfdfd2;
+    --color_card: #bfdfd2;
+    --color_shadow: #51999f;
     --color_active: #ed8d5a;
     --color_hover: #dbcb92;
     --color_title: #ecb66c;
@@ -129,7 +129,67 @@ body {
     display: inline-block;
     margin-right: 5px;
     background-color: blue;
+    transition: all 0.3s;
 }
 .bar.active {
     background-color: red;
+}
+.bar.sorted {
+    background-color: green;
+}
+
+/* 排序盒子样式 */
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: var(--color_card);
+    box-shadow: -5px 5px 5px var(--color_shadow);
+    margin: 5px;
+}
+.visualization {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    border: 1px solid #000;
+    height: 400px;
+    background-color: #fff;
+    margin-top: 5px;
+}
+.input {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    margin: 5px;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    margin: 5px;
+}
+.control {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    margin: 5px;
+}
+input {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 5px;
+}
+#performance-visualization {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }
