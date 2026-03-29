@@ -111,7 +111,7 @@ async function bubbleSort(arr, container) {
             break;
         }
     }
-    ArrayRender(arr, container, { sorted: sortedIndex });
+    ArrayRender(arr, container, { sortedIndex: sortedIndex });
     await delay();
 }
 // 插入排序
