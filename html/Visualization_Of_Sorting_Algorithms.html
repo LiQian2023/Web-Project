@@ -15,76 +15,123 @@
         </header>
         <nav class="nav h_nav">
             <ul>
+                <li><a href="#createData">生成数组</a></li>
                 <li><a href="#bubble">冒泡排序</a></li>
                 <li><a href="#insertion">插入排序</a></li>
                 <li><a href="#selection">选择排序</a></li>
+                <li><a href="#performance">算法性能比较</a></li>
             </ul>
         </nav>
         <main class="main">
             <nav class="nav v_nav l_nav">
                 <ul>
+                    <li><a href="#createData">生成数组</a></li>
                     <li><a href="#bubble">冒泡排序</a></li>
                     <li><a href="#insertion">插入排序</a></li>
                     <li><a href="#selection">选择排序</a></li>
+                    <li><a href="#performance">算法性能比较</a></li>
                 </ul>
             </nav>
             <section class="content">
-                <section class="createData" id="createData">
-                    <div>
-                        <label for="sizeInput">size = </label>
-                        <input
-                            type="text"
-                            id="sizeInput"
-                            name="sizeInput"
-                            placeholder="请输入数组大小..."
-                        />
+                <section class="createData card" id="createData">
+                    <div class="input">
+                        <div>
+                            <label for="sizeInput">size = </label>
+                            <input
+                                type="text"
+                                id="sizeInput"
+                                name="sizeInput"
+                                placeholder="请输入数组大小..."
+                                title="请输入数组大小..."
+                            />
+                        </div>
+                        <div>
+                            <label for="time">gap = </label>
+                            <input
+                                type="text"
+                                id="time"
+                                name="time"
+                                placeholder="请输入间隔时间,默认为1000ms..."
+                                title="请输入间隔时间,默认为1000ms..."
+                            />
+                            <label for="time">ms</label>
+                        </div>
+                        <button class="create">生成数组</button>
                     </div>
-                    <div>
-                        <label for="time">gap = </label>
-                        <input
-                            type="text"
-                            id="time"
-                            name="time"
-                            placeholder="请输入间隔时间,默认为1000ms..."
-                        />
-                        <label for="time">ms</label>
-                    </div>
-                    <button class="create">生成数组</button>
+                    <div class="visualization" id="array-visualization"></div>
                 </section>
-                <div class="visualization" id="array-visualization"></div>
-                <section class="sort" id="bubble">
+
+                <section class="sort card" id="bubble">
                     <h2>冒泡排序</h2>
-                    <p>
-                        冒泡排序是一种简单的排序算法，它重复地遍历要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历数列的工作是重复进行直到没有再需要交换，也就是说该数列已经排序完成。
-                    </p>
-                    <button class="start" data-type="bubble">开始排序</button>
+                    <div class="description">
+                        <p>
+                            冒泡排序是一种简单的排序算法，它重复地遍历要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历数列的工作是重复进行直到没有再需要交换，也就是说该数列已经排序完成。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="bubble">
+                            开始排序
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
                     <div class="visualization" id="bubble-visualization"></div>
                 </section>
-                <section class="sort" id="insertion">
+
+                <section class="sort card" id="insertion">
                     <h2>插入排序</h2>
-                    <button class="start" data-type="insertion">
-                        开始排序
-                    </button>
+                    <div class="description">
+                        <p>
+                            冒泡排序是一种简单的排序算法，它重复地遍历要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历数列的工作是重复进行直到没有再需要交换，也就是说该数列已经排序完成。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="insertion">
+                            开始排序
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
                     <div
                         class="visualization"
                         id="insertion-visualization"
                     ></div>
                 </section>
-                <section class="sort" id="selection">
+
+                <section class="sort card" id="selection">
                     <h2>选择排序</h2>
-                    <button class="start" data-type="selection">
-                        开始排序
-                    </button>
+                    <div class="description">
+                        <p>
+                            冒泡排序是一种简单的排序算法，它重复地遍历要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历数列的工作是重复进行直到没有再需要交换，也就是说该数列已经排序完成。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="selection">
+                            开始排序
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
                     <div
                         class="visualization"
                         id="selection-visualization"
                     ></div>
                 </section>
-                <section class="sort" id="performance">
+
+                <section class="sort card" id="performance">
                     <h2>算法性能比较</h2>
-                    <button class="start" data-type="performance">
-                        开始排序
-                    </button>
+                    <div class="description">
+                        <p>
+                            冒泡排序是一种简单的排序算法，它重复地遍历要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历数列的工作是重复进行直到没有再需要交换，也就是说该数列已经排序完成。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="performance">
+                            开始比较
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
                     <div
                         class="visualization"
                         id="performance-visualization"
@@ -93,9 +140,11 @@
             </section>
             <nav class="nav v_nav r_nav">
                 <ul>
+                    <li><a href="#createData">生成数组</a></li>
                     <li><a href="#bubble">冒泡排序</a></li>
                     <li><a href="#insertion">插入排序</a></li>
                     <li><a href="#selection">选择排序</a></li>
+                    <li><a href="#performance">算法性能比较</a></li>
                 </ul>
             </nav>
         </main>
