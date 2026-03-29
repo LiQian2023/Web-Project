@@ -5,21 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Resume</title>
         <link rel="stylesheet" href="../css/resume_v2.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
     </head>
     <body>
+        <button onclick="printResume()" class="print-btn">
+            <i class="fa fa-print"></i> 下载PDF / 打印
+        </button>
         <div class="resume">
             <aside class="sidebar">
-                <div class="profile">
+                <div class="profile card">
                     <div class="avatar">
                         <img
                             src="../img/个人电子照片（证件照）.jpg"
                             alt="照片加载失败..."
                         />
                     </div>
-                    <h1>李谦</h1>
+                    <h1 class="name">李谦</h1>
+                    <p class="title">前端开发工程师</p>
                 </div>
-                <div class="info">
-                    <h2>基本信息</h2>
+                <div class="info card">
+                    <h2 class="section-title">基本信息</h2>
                     <p>年龄:28岁</p>
                     <p>生日:1998.08.01</p>
                     <p>籍贯:湖北省荆州市监利市</p>
@@ -39,20 +47,20 @@
                         <li>
                             CSDN博客地址: 蒙奇D索大: <br />
                             <a href="https://blog.csdn.net/2301_79458548"
-                                >https://blog.csdn.net/2301_79458548</a
+                                >blog.csdn.net/2301_79458548</a
                             >
                         </li>
                         <li>
                             51CTO博客地址：蒙奇D索隆: <br />
                             <a href="https://blog.51cto.com/u_16231477"
-                                >https://blog.51cto.com/u_16231477</a
+                                >blog.51cto.com/u_16231477</a
                             >
                         </li>
                         <li>
                             腾讯云社区博客地址：蒙奇D索隆: <br />
                             <a
                                 href="https://cloud.tencent.com/developer/user/10787339"
-                                >https://cloud.tencent.com/developer/user/10787339</a
+                                >cloud.tencent.com/developer/user/10787339</a
                             >
                         </li>
                     </ul>
@@ -60,36 +68,319 @@
                         <li>
                             gitee仓库地址：小李爱编码: <br />
                             <a href="https://gitee.com/Li_2023-9-13"
-                                >https://gitee.com/Li_2023-9-13</a
+                                >gitee.com/Li_2023-9-13</a
                             >
                         </li>
                         <li>
                             github仓库地址：LiQian2023: <br />
                             <a href="https://github.com/LiQian2023"
-                                >https://github.com/LiQian2023</a
+                                >github.com/LiQian2023</a
                             >
                         </li>
                     </ul>
                 </div>
-                <div class="skills">
-                    <h2>相关技能</h2>
-                    <p>前端技术栈:HTML/CSS/JS</p>
-                    <p>理论知识:DS/OS/CN/CO</p>
-                    <p>其它技术栈:C/Python</p>
-                    <p>绘图工具:CAD/PS</p>
+                <div class="skills card">
+                    <h2 class="section-title">相关技能</h2>
+                    <div class="tags">
+                        前端技术栈:<br />
+                        <span>HTML</span>
+                        <div class="bar">
+                            <div class="level" style="width: 80%"></div>
+                        </div>
+                        <span>CSS</span>
+                        <div class="bar">
+                            <div class="level" style="width: 70%"></div>
+                        </div>
+                        <span>JavaScript</span>
+                        <div class="bar">
+                            <div class="level" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        理论知识:<br />
+                        <span>DS</span>
+                        <div class="bar">
+                            <div class="level" style="width: 100%"></div>
+                        </div>
+                        <span>OS</span>
+                        <div class="bar">
+                            <div class="level" style="width: 60%"></div>
+                        </div>
+                        <span>CN</span>
+                        <div class="bar">
+                            <div class="level" style="width: 40%"></div>
+                        </div>
+                        <span>CO</span>
+                        <div class="bar">
+                            <div class="level" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        其它技术栈:<br />
+                        <span>C</span>
+                        <div class="bar">
+                            <div class="level" style="width: 90%"></div>
+                        </div>
+                        <span>Python</span>
+                        <div class="bar">
+                            <div class="level" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        绘图工具: <br />
+                        <span>CAD</span>
+                        <div class="bar">
+                            <div class="level" style="width: 50%"></div>
+                        </div>
+                        <span>PS</span>
+                        <div class="bar">
+                            <div class="level" style="width: 20%"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="hobby">
-                    <h2>兴趣爱好</h2>
+                <div class="hobby card">
+                    <h2 class="section-title">兴趣爱好</h2>
                     <p>健身/跆拳道/电影/动漫</p>
                 </div>
             </aside>
             <main class="main">
-                <section class="education"></section>
-                <section class="intern"></section>
-                <section class="project"></section>
-                <section class="school"></section>
-                <section class="award"></section>
+                <section class="education card">
+                    <h2 class="section-title">
+                        <i class="fa fa-graduation-cap"></i>教育经历
+                    </h2>
+                    <div class="row">
+                        <p><span class="label">本科学校：</span>台州学院</p>
+                        <p><span class="label">本科学院：</span>建筑工程学院</p>
+                        <p>
+                            <span class="label">本科专业：</span
+                            >给排水科学与工程
+                        </p>
+                        <p><span class="label">学业状态：</span>已毕业</p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span class="label">相关课程：</span
+                            >工程制图与CAD、工程力学、水处理微生物学、水泵与泵站、给水排水管网系统……
+                        </p>
+                        <p>
+                            <span class="label">毕业证书编号：</span
+                            >103501202105001846
+                        </p>
+                        <p><span class="label">学士学位：</span>工学</p>
+                        <p>
+                            <span class="label">学士学位编号：</span
+                            >1035042021001946
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span class="label">自学课程：</span
+                            >C语言程序设计、Python程序设计、数据结构、操作系统、计算机网络、计算机组成原理……
+                        </p>
+                    </div>
+                </section>
+
+                <section class="project card">
+                    <h2 class="section-title">
+                        <i class="fa fa-laptop"></i>项目经历
+                    </h2>
+                    <section>
+                        <h3>前端项目经历</h3>
+                        <div class="project-header">
+                            <span class="project-name"
+                                >🚀 排序算法可视化系统（Web项目）</span
+                            >
+                            <span class="time">2026.03</span>
+                        </div>
+                        <p class="project-sub">Web前端项目</p>
+                        <div class="tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>async/await</span>
+                            <span>Promise.all</span>
+                        </div>
+                        <ul>
+                            <li>
+                                基于
+                                <b class="tags">HTML/CSS/JS</b>
+                                构建排序算法可视化系统
+                            </li>
+                            <li>
+                                使用
+                                <code>async/await</code>
+                                实现动画执行流程控制以及暂停/继续功能
+                            </li>
+                            <li>
+                                通过
+                                <code>Promise.all</code>
+                                实现多算法并行调度与对比执行
+                            </li>
+                            <li>
+                                设计状态驱动渲染机制
+                                <code>active/sorted</code> ，实现过程高亮
+                            </li>
+                            <li>
+                                基于
+                                <code>performance.now() </code>
+                                实现算法性能统计与分析
+                            </li>
+                            <li>
+                                构建排序算法可视化系统，实现3种算法动态对比与性能分析
+                            </li>
+                        </ul>
+                        <p><strong>项目展示：</strong></p>
+                        <ul>
+                            <li>
+                                <a
+                                    href="../html/Visualization_Of_Sorting_Algorithms.html"
+                                    target="_blank"
+                                    ><i class="fa fa-link"></i> 在线演示</a
+                                >
+                            </li>
+                            <li>
+                                <a href="..." target="_blank"
+                                    ><i class="fa fa-laptop"></i> GitHub源码</a
+                                >
+                            </li>
+                        </ul>
+                        <p>
+                            <strong>项目截图：</strong>
+                            <img src="" alt="图片加载失败..." />
+                        </p>
+                    </section>
+                </section>
+
+                <section class="intern card">
+                    <h2 class="section-title">
+                        <i class="fa fa-briefcase"></i>实习经历
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2023.02 - 2023.11</span>
+                            <p>浙江宣星建设有限公司</p>
+                        </div>
+                    </div>
+                    <p><strong>实习部门：</strong>工程部</p>
+                    <p><strong>实习岗位：</strong>实习生</p>
+                    <ul>
+                        <li>参与工程竣工图绘制以及施工图审核工作</li>
+                        <li>使用 CAD 工具完成工程制图任务</li>
+                        <li>参与项目现场勘察工作，熟悉工程实施流程</li>
+                        <li>提升团队协作与沟通能力</li>
+                    </ul>
+                </section>
+
+                <section class="school card">
+                    <h2 class="section-title">
+                        <i class="fa fa-university"></i>校园经历
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2016.09</span>
+                            <p>加入台州学院跆拳道校队</p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2018.06</span>
+                            <p>参与浙江大学紫金杯暨长三角地区高校公开赛</p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2018.10</span>
+                            <p>参与台州学院第十六届田径运动会</p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2018.12</span>
+                            <p>参与TRIZ创新理论学习与专利务实</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="award card">
+                    <h2 class="section-title">
+                        <i class="fa fa-trophy"></i>获奖经历
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2017.10 </span>
+                            <p>取得跆拳道三级裁判证</p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2018.01 </span>
+                            <p>获得台州市跆拳道协会2017年度优秀教练</p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span> 2018.03 </span>
+                            <p>
+                                获得国际跆拳道协会黑带一段认证
+                                证书编号：05600744
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2018.06 </span>
+                            <p>
+                                浙江大学紫金杯暨长三角地区高校公开赛跆拳道男子组64kg级第一名
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2018.11 </span>
+                            <p>
+                                获得2018浙江省第十三届大众跆拳道公开赛“博浪杯”台州分区赛优秀教练员
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2019.04 </span>
+                            <p>
+                                成功申请实用新型专利《一种收纳手机耳机的卡槽》申请号：CN201821739095.9
+                                公开号：CN208691512U
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2019.05</span>
+                            <p>
+                                成功申请实用新型专利《一种液位控制器》申请号：CN208873052U
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2022.04 </span>
+                            <p>
+                                获得中国跆拳道协会黑带二段认证
+                                证书编号：D67179741
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span>2024.03 </span>
+                            <p>
+                                获得中国跆拳道协会大众中级教练员认证
+                                教练员编号：MC21037004
+                            </p>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
+        <script src="../js/resume_v2.js"></script>
     </body>
 </html>
