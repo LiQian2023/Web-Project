@@ -125,17 +125,52 @@ body {
 
 /* 柱子样式 */
 .bar {
-    width: 20px;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 0;
     background-color: blue;
-    transition: all 0.3s;
+    transition:
+        transform 0.35s ease,
+        height 0.35s ease,
+        background-color 0.2s ease;
+    will-change: transform;
+    transform-origin: center bottom;
 }
-.bar.active {
-    background-color: red;
+
+/* 状态样式 */
+/* 比较样式*/
+.bar.active-compare-bubble {
+    background-color: yellow;
 }
+.bar.active-compare-insertion {
+    background-color: orange;
+}
+.bar.active-compare-selection {
+    background-color: purple;
+}
+/* 选择样式 */
+.bar.select {
+    background-color: pink;
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.35);
+}
+.bar.select.active-compare-selection {
+    background-color: pink;
+}
+/* 交换样式 */
+.bar.active-swap {
+    background-color: #ed8d5a;
+}
+/* 已排序样式 */
 .bar.sorted {
     background-color: green;
+}
+/* 待排序区域样式 */
+.bar.tmp {
+    background-color: red;
+    opacity: 0.5;
+}
+/* 交换中样式 */
+.bar.swapping {
+    z-index: 2;
 }
 
 /* 排序盒子样式 */
@@ -149,6 +184,7 @@ body {
     box-shadow: -5px 5px 5px var(--color_shadow);
     margin: 5px;
 }
+/* 可视化区域样式 */
 .visualization {
     display: flex;
     flex-direction: row;
@@ -159,37 +195,70 @@ body {
     height: 400px;
     background-color: #fff;
     margin-top: 5px;
+    gap: 5px;
 }
+/* 比较容器样式 */
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.perf-item {
+    flex: 0.5;
+    margin: 5px;
+}
+.item-visualization {
+    box-shadow: -5px 5px 5px var(--color_shadow);
+    background-color: #fff;
+    margin: 5px;
+    border: 1px solid #000;
+    height: 200px;
+    width: 100%;
+}
+
+/* 输入区域样式 */
 .input {
     display: flex;
     justify-content: space-evenly;
     align-items: stretch;
     margin: 5px;
 }
-.description {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: stretch;
-    margin: 5px;
-}
-.control {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: stretch;
-    margin: 5px;
-}
+/* 输入框样式 */
 input {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     padding: 5px;
 }
-#performance-visualization {
+/* 算法描述样式 */
+.description {
+    margin: 5px;
+}
+/* 控制按钮样式 */
+.control {
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: stretch;
+    margin: 5px;
+}
+
+/* 按钮样式 */
+button {
+    cursor: pointer;
 }
