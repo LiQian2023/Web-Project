@@ -51,8 +51,8 @@
                                 type="text"
                                 id="time"
                                 name="time"
-                                placeholder="请输入间隔时间,默认为1000ms..."
-                                title="请输入间隔时间,默认为1000ms..."
+                                placeholder="请输入间隔时间,默认为100ms..."
+                                title="请输入间隔时间,默认为100ms..."
                             />
                             <label for="time">ms</label>
                         </div>
@@ -132,10 +132,40 @@
                         <button class="pause">暂停</button>
                         <button class="resume">继续</button>
                     </div>
-                    <div
-                        class="visualization"
-                        id="performance-visualization"
-                    ></div>
+                    <div class="container" id="performance-visualization">
+                        <div class="row">
+                            <section class="col perf-item">
+                                <h3>冒泡排序</h3>
+                                <div
+                                    class="perf-visualization item-visualization"
+                                    id="performance-bubble"
+                                ></div>
+                            </section>
+                            <section class="col perf-item">
+                                <h3>插入排序</h3>
+                                <div
+                                    class="perf-visualization item-visualization"
+                                    id="performance-insertion"
+                                ></div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col perf-item">
+                                <h3>选择排序</h3>
+                                <div
+                                    class="perf-visualization item-visualization"
+                                    id="performance-selection"
+                                ></div>
+                            </section>
+                            <section class="col perf-item">
+                                <h3>性能图表</h3>
+                                <div
+                                    class="visualization_result item-visualization"
+                                    id="performance-chart"
+                                ></div>
+                            </section>
+                        </div>
+                    </div>
                 </section>
             </section>
             <nav class="nav v_nav r_nav">
