@@ -51,29 +51,146 @@ const Status = {
 };
 // 即时动作
 const Active = {
-    // 交换动画
-    async swap({ container, runtimeArr, step, context }) {
+    // 交换动画（冒泡/选择保持不变）
+    async swap({ container, runtimeArr, step }) {
         const [i, j] = step.indices;
-        // 检查越界
         if (i >= runtimeArr.length || j >= runtimeArr.length) return;
-        // 🔥 1. 动画（先做）
+
         await flipSwap(container, i, j);
-        // 🔥 2. 数据同步
         [runtimeArr[i], runtimeArr[j]] = [runtimeArr[j], runtimeArr[i]];
     },
-    // 选择动画
-    async pick({ container, runtimeArr, step, context }) {
+
+    // pick：只负责抬起 key
+    async pick({ container, step, context }) {
         const [index] = step.indices;
+        const bars = Array.from(getBars(container));
+        const bar = bars[index];
+        if (!bar) return;
+
+        if (context.floatingBar === bar) return;
+
+        const liftY = context.liftY || 30;
+        const duration = Math.max(160, time * 0.6);
+
+        bar.classList.add("swapping");
+        bar.style.transition = `transform ${duration}ms ease`;
+        bar.style.transform = `translateY(-${liftY}px)`;
+
+        context.floatingBar = bar;
+        context.floatingIndex = index;
+
+        await sleep(duration);
     },
-    // 移动动画
+
+    // move：按 role 区分三种插入排序动作
     async move({ container, step, context }) {
         const [from, to] = step.indices;
-    },
-    // 插入动画
-    async insert({ container, runtimeArr, step, context }) {
-        const [from, to] = step.indices;
+        const role = step.role || "";
 
-        await delay();
+        let bars = Array.from(getBars(container));
+        const movingBar = bars[from];
+        const tmpBar = context.tmpBar;
+
+        if (!movingBar) return;
+        if (!tmpBar && step.type === "insertion") return;
+
+        // 1) key: index -> n
+        if (role === "toBuffer") {
+            await flipReorder(
+                container,
+                () => {
+                    // 先让真实 tmpBar 占据原 key 位置
+                    container.insertBefore(tmpBar, movingBar);
+                    // 再把 key 放到末尾 buffer 区
+                    container.appendChild(movingBar);
+                },
+                context,
+            );
+
+            const newBars = Array.from(getBars(container));
+            context.currentTmpIndex = newBars.indexOf(tmpBar);
+            context.floatingIndex = newBars.indexOf(context.floatingBar);
+            return;
+        }
+
+        // 2) shift: j -> holeIndex
+        if (role === "shift") {
+            await flipReorder(
+                container,
+                () => {
+                    // 空位左移到 movingBar 原位置
+                    container.insertBefore(tmpBar, movingBar);
+                },
+                context,
+            );
+
+            const newBars = Array.from(getBars(container));
+            context.currentTmpIndex = newBars.indexOf(tmpBar);
+            context.floatingIndex = newBars.indexOf(context.floatingBar);
+            return;
+        }
+
+        // 3) key: n -> holeIndex
+        if (role === "insertBack") {
+            await flipReorder(
+                container,
+                () => {
+                    // 先把浮动 key 插到 tmpBar 前（tmpBar 当前就在 hole 位置）
+                    container.insertBefore(context.floatingBar, tmpBar);
+                    // 再把 tmpBar 放回末尾 buffer 区
+                    container.appendChild(tmpBar);
+                },
+                context,
+            );
+
+            const newBars = Array.from(getBars(container));
+            context.currentTmpIndex = newBars.indexOf(tmpBar);
+            context.floatingIndex = newBars.indexOf(context.floatingBar);
+            return;
+        }
+
+        // 默认 move（兜底）
+        await flipReorder(
+            container,
+            () => {
+                bars = Array.from(getBars(container));
+                const referenceNode =
+                    from < to ? bars[to].nextSibling : bars[to];
+                container.insertBefore(movingBar, referenceNode);
+            },
+            context,
+        );
+
+        const newBars = Array.from(getBars(container));
+        context.currentTmpIndex = context.tmpBar
+            ? newBars.indexOf(context.tmpBar)
+            : null;
+        context.floatingIndex = context.floatingBar
+            ? newBars.indexOf(context.floatingBar)
+            : null;
+    },
+
+    // insert：只负责让 key 落下
+    async insert({ container, step, context }) {
+        const [index] = step.indices;
+        const bars = Array.from(getBars(container));
+        const bar = bars[index];
+        if (!bar) return;
+
+        const targetBar = context.floatingBar || bar;
+        const duration = Math.max(160, time * 0.6);
+
+        targetBar.style.transition = `transform ${duration}ms ease`;
+        targetBar.style.transform = "translate(0px, 0px)";
+
+        await sleep(duration);
+
+        targetBar.classList.remove("swapping");
+        targetBar.style.transition = "";
+        targetBar.style.transform = "";
+
+        context.floatingBar = null;
+        context.floatingIndex = null;
     },
 };
 
@@ -264,32 +381,70 @@ async function flipSwap(container, i, j) {
 
     normalizeBarStyles(container);
 }
+// 重新排序fliP
+async function flipReorder(container, mutate, context = {}) {
+    const bars = Array.from(getBars(container));
+    const firstRects = new Map(
+        bars.map((bar) => [bar, bar.getBoundingClientRect()]),
+    );
+
+    mutate();
+
+    const newBars = Array.from(getBars(container));
+    const moveDuration = Math.max(220, time * 0.8);
+    const liftY = context.liftY || 30;
+
+    newBars.forEach((bar) => {
+        const first = firstRects.get(bar);
+        const last = bar.getBoundingClientRect();
+        if (!first || !last) return;
+
+        const dx = first.left - last.left;
+        const isFloating = bar === context.floatingBar;
+        const y = isFloating ? -liftY : 0;
+
+        bar.style.transition = "none";
+        bar.style.transform = `translate(${dx}px, ${y}px)`;
+    });
+
+    container.offsetHeight;
+
+    newBars.forEach((bar) => {
+        const isFloating = bar === context.floatingBar;
+        const y = isFloating ? -liftY : 0;
+
+        bar.style.transition = `transform ${moveDuration}ms ease`;
+        bar.style.transform = `translate(0px, ${y}px)`;
+    });
+
+    await sleep(moveDuration);
+}
 // 添加步骤
 function createStepAdder(steps, type, container) {
-    return function addStep(stepType, indices, add = "active") {
+    return function addStep(stepType, indices, add = "active", role = "") {
         steps.push({
-            // 记录类型
             stepType,
-            // 记录步骤
             indices,
-            // 记录算法类型
             type,
-            // 记录视口
             container,
-            // 记录添加类型
             add,
+            role,
         });
     };
 }
 
 // 执行步骤
 async function runSteps(container, steps, runtimeArr) {
+    const bars = Array.from(getBars(container));
+
     let context = {
         currentSelectedIndex: null,
         currentTmpIndex: null,
-        floatingIndex: null, // 当前浮动柱子
-        tmpIndex: null, // 临时空位柱子
+        floatingIndex: null,
+        floatingBar: null,
+        tmpBar: steps[0]?.type === "insertion" ? bars[bars.length - 1] : null,
         runtimeArr,
+        liftY: 30,
     };
 
     for (let step of steps) {
@@ -354,22 +509,22 @@ async function animate(container, step, context = {}) {
         bars[context.currentSelectedIndex].classList.add("select");
     }
 
-    // 插入排序：补回末尾 tmp 槽
+    // 插入排序：真实 tmpBar 始终保持 tmp 样式
     if (
         step.type === "insertion" &&
-        context.currentTmpIndex !== null &&
-        bars[context.currentTmpIndex]
+        context.tmpBar &&
+        context.tmpBar.isConnected
     ) {
-        bars[context.currentTmpIndex].classList.add("tmp");
+        context.tmpBar.classList.add("tmp");
     }
 
-    // 插入排序：补回当前浮动柱子
+    // 插入排序：真实 floatingBar 始终保持 select 样式
     if (
         step.type === "insertion" &&
-        context.floatingIndex !== null &&
-        bars[context.floatingIndex]
+        context.floatingBar &&
+        context.floatingBar.isConnected
     ) {
-        bars[context.floatingIndex].classList.add("select");
+        context.floatingBar.classList.add("select");
     }
 
     await delay();
@@ -403,45 +558,63 @@ async function bubbleSort(arr, container, type = "bubble") {
     return steps;
 }
 // 插入排序
+// 插入排序：三区模型 + 真实 tmpBar
 async function insertSort(arr, container, type = "insertion") {
-    // 排序步骤
     const steps = [];
     const addStep = createStepAdder(steps, type, container);
-    for (let left = 0; left < arr.length - 1; left++) {
-        // 获取tmp的位置
-        let tmpIndex = arr.length - 1;
-        let keyIndex = left + 1;
-        addStep("pick", [tmpIndex], "active");
 
-        // 获取当前待排序元素
-        let key = arr[keyIndex];
-        addStep("pick", [keyIndex], "active");
-        addStep("move", [keyIndex, tmpIndex], "active");
-        addStep("move", [tmpIndex, keyIndex], "active");
-        addStep("insert", [tmpIndex], "active");
-        addStep("insert", [keyIndex], "active");
-        [tmpIndex, keyIndex] = [keyIndex, tmpIndex];
-        let j = left;
-        while (j >= 0 && arr[j] > key) {
-            addStep("pick", [tmpIndex], "active");
-            addStep("pick", [j], "active");
-            addStep("move", [j, tmpIndex], "active");
-            addStep("move", [tmpIndex, j], "active");
-            addStep("insert", [tmpIndex], "active");
-            addStep("insert", [j], "active");
-            tmpIndex = j;
+    // arr 形态：[真实数据..., 0]
+    const dataLen = arr.length - 1;
+    const bufferIndex = arr.length - 1;
+
+    // 真实排序数据，不包含最后的 0 占位柱
+    const data = arr.slice(0, dataLen);
+
+    // 初始 tmpBar 在末尾 buffer 区
+    addStep("tmp", [bufferIndex], "status");
+
+    for (let i = 1; i < dataLen; i++) {
+        const key = data[i];
+        let j = i - 1;
+        let holeIndex = i;
+
+        // 1. 拿起 index 处元素
+        addStep("pick", [i], "active");
+
+        // 2. 移到 n 处暂存区
+        addStep("move", [i, bufferIndex], "active", "toBuffer");
+
+        // 3. 原 index 处由 tmpBar 占住，形成空位
+        addStep("tmp", [holeIndex], "status");
+
+        // 4. 比 key 大的元素依次右移到当前空位
+        while (j >= 0 && data[j] > key) {
+            addStep("compare", [j, bufferIndex], "status");
+            addStep("move", [j, holeIndex], "active", "shift");
+
+            data[j + 1] = data[j];
+            holeIndex = j;
+
+            addStep("tmp", [holeIndex], "status");
             j--;
         }
-        addStep("pick", [tmpIndex], "active");
-        addStep("pick", [keyIndex], "active");
-        addStep("move", [keyIndex, tmpIndex], "active");
-        addStep("move", [tmpIndex, keyIndex], "active");
-        addStep("insert", [tmpIndex], "active");
-        addStep("insert", [keyIndex], "active");
-        [tmpIndex, keyIndex] = [keyIndex, tmpIndex];
-        arr[j + 1] = key;
-        addStep("sorted", [keyIndex], "status");
+
+        // 5. n 处 key 回插到最终空位
+        addStep("move", [bufferIndex, holeIndex], "active", "insertBack");
+        addStep("insert", [holeIndex], "active");
+
+        data[holeIndex] = key;
+
+        // 6. tmpBar 回到 buffer 区
+        addStep("tmp", [bufferIndex], "status");
+
+        // 7. 已排序区高亮
+        for (let k = 0; k <= i; k++) {
+            addStep("sorted", [k], "status");
+        }
     }
+
+    return steps;
 }
 // 选择排序
 async function selectSort(arr, container, type = "selection") {
@@ -553,7 +726,7 @@ document.querySelectorAll(".start").forEach((btn) => {
         normalizeBarStyles(container);
         clearTransientStatus(container);
 
-        let arrCopy = [...arr];
+        let arrCopy = type === "insertion" ? [...arr, 0] : [...arr];
         let arrCopy2 = type === "insertion" ? [...arr, 0] : [...arr];
 
         let steps = await algorithms[type](arrCopy, container);
