@@ -238,14 +238,31 @@ function Rendering(container, value) {
     container.appendChild(div);
 }
 // 初始化数组
+function getContainerGap(container) {
+    if (container.classList.contains("perf-visualization")) {
+        return 3;
+    }
+    return 5;
+}
+
 function initBars(arr, container) {
     container.innerHTML = "";
-    let containerWidth = container.clientWidth;
+
+    const currentGap = getContainerGap(container);
+    const containerWidth = container.clientWidth;
+
     barWidth = Math.max(
         2,
-        Math.floor((containerWidth - gap * (arr.length - 1)) / arr.length),
+        Math.floor(
+            (containerWidth - currentGap * (arr.length - 1)) / arr.length,
+        ),
     );
+
     containerHeight = container.clientHeight;
+
+    // 让容器本身的真实 gap 和计算保持一致
+    container.style.gap = `${currentGap}px`;
+
     arr.forEach((value) => {
         Rendering(container, value);
     });
@@ -304,6 +321,119 @@ function initInsertionBars(arr, container) {
     const runtimeArr = [...arr, 0]; // 末尾追加 tmp 槽
     initBars(runtimeArr, container);
     return runtimeArr;
+}
+// 结果区渲染表格 + 柱状图
+function renderPerformanceResult(container, results) {
+    const maxPureTime = Math.max(
+        ...results.map((item) => item.pureAlgorithmTime),
+        1,
+    );
+    const maxStepBuildTime = Math.max(
+        ...results.map((item) => item.stepBuildTime),
+        1,
+    );
+    const maxAnimationTime = Math.max(
+        ...results.map((item) => item.animationTime),
+        1,
+    );
+
+    container.innerHTML = `
+        <div class="perf-result-panel">
+            <table class="perf-table">
+                <thead>
+                    <tr>
+                        <th>算法</th>
+                        <th>纯算法平均时间(ms)</th>
+                        <th>步骤生成时间(ms)</th>
+                        <th>动画展示时间(ms)</th>
+                        <th>比较次数</th>
+                        <th>交换/移动次数</th>
+                        <th>总步骤数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${results
+                        .map(
+                            (item) => `
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.pureAlgorithmTime.toFixed(4)}</td>
+                            <td>${item.stepBuildTime.toFixed(2)}</td>
+                            <td>${item.animationTime.toFixed(2)}</td>
+                            <td>${item.stats.compareCount}</td>
+                            <td>${item.stats.swapCount + item.stats.moveCount}</td>
+                            <td>${item.stats.totalSteps}</td>
+                        </tr>
+                    `,
+                        )
+                        .join("")}
+                </tbody>
+            </table>
+
+            <div class="perf-chart-group">
+                <h4>纯算法平均时间</h4>
+                <div class="perf-chart-bars">
+                    ${results
+                        .map(
+                            (item) => `
+                        <div class="perf-bar-item">
+                            <div
+                                class="perf-bar algorithm-bar"
+                                style="height: ${(item.pureAlgorithmTime / maxPureTime) * 100}%"
+                                title="${item.pureAlgorithmTime.toFixed(4)} ms"
+                            ></div>
+                            <span>${item.name}</span>
+                            <small>${item.pureAlgorithmTime.toFixed(4)} ms</small>
+                        </div>
+                    `,
+                        )
+                        .join("")}
+                </div>
+            </div>
+
+            <div class="perf-chart-group">
+                <h4>步骤生成时间</h4>
+                <div class="perf-chart-bars">
+                    ${results
+                        .map(
+                            (item) => `
+                        <div class="perf-bar-item">
+                            <div
+                                class="perf-bar algorithm-bar"
+                                style="height: ${(item.stepBuildTime / maxStepBuildTime) * 100}%"
+                                title="${item.stepBuildTime.toFixed(2)} ms"
+                            ></div>
+                            <span>${item.name}</span>
+                            <small>${item.stepBuildTime.toFixed(2)} ms</small>
+                        </div>
+                    `,
+                        )
+                        .join("")}
+                </div>
+            </div>
+
+            <div class="perf-chart-group">
+                <h4>动画展示时间</h4>
+                <div class="perf-chart-bars">
+                    ${results
+                        .map(
+                            (item) => `
+                        <div class="perf-bar-item">
+                            <div
+                                class="perf-bar animation-bar"
+                                style="height: ${(item.animationTime / maxAnimationTime) * 100}%"
+                                title="${item.animationTime.toFixed(2)} ms"
+                            ></div>
+                            <span>${item.name}</span>
+                            <small>${item.animationTime.toFixed(2)} ms</small>
+                        </div>
+                    `,
+                        )
+                        .join("")}
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 // ----------动画引擎----------
@@ -431,6 +561,39 @@ function createStepAdder(steps, type, container) {
             role,
         });
     };
+}
+// 分析步骤
+function analyzeSteps(steps) {
+    const stats = {
+        compareCount: 0,
+        swapCount: 0,
+        moveCount: 0,
+        pickCount: 0,
+        insertCount: 0,
+        totalSteps: steps.length,
+    };
+
+    steps.forEach((step) => {
+        switch (step.stepType) {
+            case "compare":
+                stats.compareCount++;
+                break;
+            case "swap":
+                stats.swapCount++;
+                break;
+            case "move":
+                stats.moveCount++;
+                break;
+            case "pick":
+                stats.pickCount++;
+                break;
+            case "insert":
+                stats.insertCount++;
+                break;
+        }
+    });
+
+    return stats;
 }
 
 // 执行步骤
@@ -678,6 +841,54 @@ async function selectSort(arr, container, type = "selection") {
     return steps;
 }
 
+// 算法比较调用
+function bubbleSort_CMP(arr) {
+    const a = [...arr];
+    for (let i = 0; i < a.length - 1; i++) {
+        let swap = false;
+        for (let j = 0; j < a.length - i - 1; j++) {
+            if (a[j] > a[j + 1]) {
+                [a[j], a[j + 1]] = [a[j + 1], a[j]];
+                swap = true;
+            }
+        }
+        if (!swap) {
+            break;
+        }
+    }
+    return a;
+}
+function insertSort_CMP(arr) {
+    const a = [...arr];
+    for (let left = 0; left < a.length - 1; left++) {
+        let key = a[left + 1];
+        let i = left;
+        while (i >= 0 && a[i] > key) {
+            a[i + 1] = a[i];
+            i--;
+        }
+        a[i + 1] = key;
+    }
+    return a;
+}
+function selectSort_CMP(arr) {
+    const a = [...arr];
+    for (let min = 0; min < a.length - 1; min++) {
+        let key = min;
+        let j = key + 1;
+        while (j < a.length) {
+            if (a[j] < a[key]) {
+                key = j;
+            }
+            j += 1;
+        }
+        if (key != min) {
+            [a[key], a[min]] = [a[min], a[key]];
+        }
+    }
+    return a;
+}
+
 // ----------全局控制----------
 // 检查暂停
 async function checkPaused() {
@@ -705,17 +916,22 @@ function sleep(time) {
 document.querySelectorAll(".start").forEach((btn) => {
     btn.onclick = async function () {
         if (isSorting || isComparing) return;
-        isSorting = true;
 
         if (arr.length === 0) {
             alert("请先生成数组");
-            isSorting = false;
             return;
         }
 
         const type = this.dataset.type;
         const section = this.closest("section.sort");
         const container = section.querySelector(".visualization");
+
+        if (type === "performance") {
+            await performanceSort([...arr], container);
+            return;
+        }
+
+        isSorting = true;
 
         if (type === "insertion") {
             initBars([...arr, 0], container);
@@ -727,10 +943,10 @@ document.querySelectorAll(".start").forEach((btn) => {
         clearTransientStatus(container);
 
         let arrCopy = type === "insertion" ? [...arr, 0] : [...arr];
-        let arrCopy2 = type === "insertion" ? [...arr, 0] : [...arr];
+        let runtimeArr = type === "insertion" ? [...arr, 0] : [...arr];
 
         let steps = await algorithms[type](arrCopy, container);
-        await runSteps(container, steps, arrCopy2);
+        await runSteps(container, steps, runtimeArr);
 
         isSorting = false;
     };
@@ -750,47 +966,106 @@ document.querySelectorAll(".resume").forEach((btn) => {
         resumeResolvers = [];
     };
 });
+// 纯算法比较
+function measurePureAlgorithm(name, fn, baseArr) {
+    const repeat = baseArr.length <= 20 ? 5000 : 2000;
+
+    const start = performance.now();
+    for (let i = 0; i < repeat; i++) {
+        fn(baseArr);
+    }
+    const end = performance.now();
+
+    return {
+        name,
+        pureAlgorithmTime: (end - start) / repeat,
+    };
+}
 
 // 算法比较
 async function performanceSort(arr, container) {
-    const bubblecontainer = document.getElementById("performance-bubble");
-    const insertcontainer = document.getElementById("performance-insertion");
-    const selectcontainer = document.getElementById("performance-selection");
-    const performanceContainer = document.getElementById("performance-chart");
-    let arrCopy1 = [...arr];
-    let arrCopy2 = [...arr];
-    let arrCopy3 = [...arr];
+    const bubbleContainer = document.getElementById("performance-bubble");
+    const insertContainer = document.getElementById("performance-insertion");
+    const selectContainer = document.getElementById("performance-selection");
+    const resultContainer = document.getElementById("performance-chart");
 
     isComparing = true;
-    document.querySelectorAll(".perf-visualization").forEach((container) => {
-        initBars(arr, container);
-    });
+    resultContainer.innerHTML = "<p>比较中...</p>";
 
-    const start1 = performance.now();
-    let t2, t3, t4, t5, t6;
-    await Promise.all([
-        (async () => {
-            await bubbleSort(arrCopy1, bubblecontainer);
-            t2 = performance.now();
-        })(),
-        (async () => {
-            t3 = performance.now();
-            await insertSort(arrCopy2, insertcontainer);
-            t4 = performance.now();
-        })(),
-        (async () => {
-            t5 = performance.now();
-            await selectSort(arrCopy3, selectcontainer);
-            t6 = performance.now();
-        })(),
+    // 初始化三个比较视口
+    initBars([...arr], bubbleContainer);
+    initBars([...arr, 0], insertContainer);
+    initBars([...arr], selectContainer);
+
+    normalizeBarStyles(bubbleContainer);
+    normalizeBarStyles(insertContainer);
+    normalizeBarStyles(selectContainer);
+
+    clearTransientStatus(bubbleContainer);
+    clearTransientStatus(insertContainer);
+    clearTransientStatus(selectContainer);
+
+    // 0. 纯算法平均时间
+    const pureBubble = measurePureAlgorithm("冒泡排序", bubbleSort_CMP, [
+        ...arr,
+    ]);
+    const pureInsertion = measurePureAlgorithm("插入排序", insertSort_CMP, [
+        ...arr,
+    ]);
+    const pureSelection = measurePureAlgorithm("选择排序", selectSort_CMP, [
+        ...arr,
     ]);
 
+    // 1. steps 生成时间
+    const measureStepBuild = async (
+        name,
+        algorithm,
+        stepArr,
+        targetContainer,
+    ) => {
+        const buildStart = performance.now();
+        const steps = await algorithm(stepArr, targetContainer);
+        const buildEnd = performance.now();
+
+        return {
+            name,
+            steps,
+            stepBuildTime: buildEnd - buildStart,
+            stats: analyzeSteps(steps),
+        };
+    };
+
+    const [bubbleData, insertionData, selectionData] = await Promise.all([
+        measureStepBuild("冒泡排序", bubbleSort, [...arr], bubbleContainer),
+        measureStepBuild("插入排序", insertSort, [...arr, 0], insertContainer),
+        measureStepBuild("选择排序", selectSort, [...arr], selectContainer),
+    ]);
+
+    // 2. 合并纯算法时间
+    bubbleData.pureAlgorithmTime = pureBubble.pureAlgorithmTime;
+    insertionData.pureAlgorithmTime = pureInsertion.pureAlgorithmTime;
+    selectionData.pureAlgorithmTime = pureSelection.pureAlgorithmTime;
+
+    // 3. 动画展示时间
+    const measureAnimation = async (data, targetContainer, runtimeArr) => {
+        const animationStart = performance.now();
+        await runSteps(targetContainer, data.steps, runtimeArr);
+        const animationEnd = performance.now();
+
+        data.animationTime = animationEnd - animationStart;
+        return data;
+    };
+
+    const [bubbleResult, insertionResult, selectionResult] = await Promise.all([
+        measureAnimation(bubbleData, bubbleContainer, [...arr]),
+        measureAnimation(insertionData, insertContainer, [...arr, 0]),
+        measureAnimation(selectionData, selectContainer, [...arr]),
+    ]);
+
+    const results = [bubbleResult, insertionResult, selectionResult];
+    renderPerformanceResult(resultContainer, results);
+
     isComparing = false;
-    resumeResolvers = [];
     isPaused = false;
-    performanceContainer.innerHTML = `
-        <p>冒泡排序: ${(t2 - start1).toFixed(2)} ms</p>
-        <p>插入排序: ${(t4 - t3).toFixed(2)} ms</p>
-        <p>选择排序: ${(t6 - t5).toFixed(2)} ms</p>
-    `;
+    resumeResolvers = [];
 }
