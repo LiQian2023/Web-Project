@@ -4,16 +4,21 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Resume</title>
-        <link rel="stylesheet" href="../css/resume_v2.css" />
+        <link rel="stylesheet" href="../css/resume_v2.css?v=final1" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
     </head>
     <body>
-        <button onclick="printResume()" class="print-btn">
-            <i class="fa fa-print"></i> 下载PDF / 打印
-        </button>
+        <div class="action-bar">
+            <button onclick="printResume()" class="action-btn print-btn">
+                <i class="fa fa-print"></i> 打印
+            </button>
+            <button onclick="downloadPDF()" class="action-btn pdf-btn">
+                <i class="fa fa-file-pdf-o"></i> 下载 PDF
+            </button>
+        </div>
         <div class="resume">
             <aside class="sidebar">
                 <div class="profile card">
@@ -34,13 +39,15 @@
                     <p>电话/微信:13626618061</p>
                     <p>
                         邮箱:
-                        <a href="lq1476021453@outlook.com"
+                        <a href="mailto:lq1476021453@outlook.com"
                             >lq1476021453@outlook.com</a
                         >
                     </p>
                     <p>
                         个人网页:
-                        <a href="LiQian2023.github.io">LiQian2023.github.io</a>
+                        <a href="https://LiQian2023.github.io" target="_blank">
+                            LiQian2023.github.io
+                        </a>
                     </p>
                     <ul>
                         博客地址
@@ -174,8 +181,9 @@
                     </div>
                     <div class="row">
                         <p>
-                            <span class="label">自学课程：</span
-                            >C语言程序设计、Python程序设计、数据结构、操作系统、计算机网络、计算机组成原理……
+                            <span class="label">自学方向：</span>
+                            计算机基础（数据结构 / 操作系统 / 计算机网络 /
+                            计算机组成原理）
                         </p>
                     </div>
                 </section>
@@ -193,44 +201,50 @@
                             <span class="time">2026.03</span>
                         </div>
                         <p class="project-sub">Web前端项目</p>
+                        <p class="project-sub">
+                            基于原生 JavaScript
+                            构建的排序算法可视化与性能分析系统
+                        </p>
                         <div class="tags">
                             <span>HTML</span>
                             <span>CSS</span>
                             <span>JavaScript</span>
                             <span>async/await</span>
                             <span>Promise.all</span>
+                            <span>FLIP</span>
+                            <span>状态驱动</span>
                         </div>
-                        <ul>
+                        <ul class="describe">
                             <li>
-                                基于
-                                <b class="tags">HTML/CSS/JS</b>
-                                构建排序算法可视化系统
+                                构建排序算法可视化系统，设计“算法执行 → 步骤建模
+                                →
+                                动画渲染”三层架构，实现多算法同步对比与性能分析
                             </li>
                             <li>
-                                使用
-                                <code>async/await</code>
-                                实现动画执行流程控制以及暂停/继续功能
+                                基于步骤驱动机制，将排序过程拆解为 compare /
+                                swap / move 等原子操作，并统一由动画引擎调度执行
                             </li>
                             <li>
-                                通过
-                                <code>Promise.all</code>
-                                实现多算法并行调度与对比执行
+                                设计状态驱动渲染模型（active / sorted /
+                                tmp），实现排序过程动态高亮与状态表达
                             </li>
                             <li>
-                                设计状态驱动渲染机制
-                                <code>active/sorted</code> ，实现过程高亮
+                                针对插入排序实现“三区模型”，引入 tmpBar 与
+                                floatingBar，解决空位移动与数据一致性问题
                             </li>
                             <li>
-                                基于
-                                <code>performance.now() </code>
-                                实现算法性能统计与分析
+                                基于 async/await 实现动画流程控制（暂停 /
+                                继续），并通过 Promise.all 实现多视口并发执行
                             </li>
                             <li>
-                                构建排序算法可视化系统，实现3种算法动态对比与性能分析
+                                使用 performance.now()
+                                构建三维性能分析体系（算法 / 建模 / 动画）
                             </li>
                         </ul>
-                        <p><strong>项目展示：</strong></p>
-                        <ul>
+                        <p class="project-links-title">
+                            <strong>项目展示：</strong>
+                        </p>
+                        <ul class="project-links">
                             <li>
                                 <a
                                     href="../html/Visualization_Of_Sorting_Algorithms.html"
@@ -239,15 +253,25 @@
                                 >
                             </li>
                             <li>
-                                <a href="..." target="_blank"
-                                    ><i class="fa fa-laptop"></i> GitHub源码</a
-                                >
+                                <address>
+                                    <a
+                                        href="https://github.com/LiQian2023/Web-Project"
+                                        target="_blank"
+                                        ><i class="fa fa-laptop"></i>
+                                        GitHub源码
+                                    </a>
+                                </address>
                             </li>
                         </ul>
-                        <p>
+
+                        <p class="project-image-title">
                             <strong>项目截图：</strong>
-                            <img src="" alt="图片加载失败..." />
                         </p>
+                        <img
+                            src="../img/排序算法可视化成品1.png"
+                            alt="图片加载失败..."
+                            class="img"
+                        />
                     </section>
                 </section>
 
@@ -381,6 +405,7 @@
                 </section>
             </main>
         </div>
-        <script src="../js/resume_v2.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        <script src="../js/resume_v2.js?v=final1"></script>
     </body>
 </html>
