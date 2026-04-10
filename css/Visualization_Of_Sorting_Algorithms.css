@@ -231,6 +231,89 @@ body {
     height: 200px;
     width: 100%;
 }
+.perf-visualization {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.visualization_result {
+    box-shadow: -5px 5px 5px var(--color_shadow);
+    background-color: #fff;
+    margin: 5px;
+    border: 1px solid #000;
+    min-height: 200px;
+    width: 100%;
+    padding: 12px;
+    overflow: auto;
+}
+
+.perf-result-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.perf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: center;
+}
+
+.perf-table th,
+.perf-table td {
+    border: 1px solid #ccc;
+    padding: 6px 8px;
+}
+
+.perf-table th {
+    background-color: #f5f5f5;
+}
+
+.perf-chart-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.perf-chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    gap: 12px;
+    height: 160px;
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    background-color: #fafafa;
+}
+
+.perf-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    width: 30%;
+    height: 100%;
+}
+
+.perf-bar {
+    width: 40px;
+    min-height: 4px;
+    transition: height 0.35s ease;
+}
+
+.algorithm-bar {
+    background-color: #4fb1b2;
+}
+
+.animation-bar {
+    background-color: #ed8d5a;
+}
 
 /* 输入区域样式 */
 .input {
