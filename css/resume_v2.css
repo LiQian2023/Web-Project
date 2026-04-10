@@ -1,80 +1,128 @@
+/* =========================
+   01. 全局重置样式
+   ========================= */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 body {
     background: #f5f6fa;
+    padding: 28px 24px 40px;
+    color: #222;
+    font-family:
+        "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
 }
 
+/* =========================
+   02. 顶部操作栏样式
+   ========================= */
+.action-bar {
+    position: sticky;
+    top: 16px;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin: 0 auto 20px;
+    max-width: 1200px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.action-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+.print-btn {
+    background: #ffffff;
+    color: #333;
+    border: 1px solid #d8dbe2;
+}
+
+.print-btn:hover {
+    background: #f7f8fa;
+}
+
+.pdf-btn {
+    background: linear-gradient(135deg, #1976d2, #1258a8);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(25, 118, 210, 0.24);
+}
+
+.pdf-btn:hover {
+    box-shadow: 0 10px 22px rgba(25, 118, 210, 0.32);
+}
+
+/* =========================
+   03. 简历主体容器样式
+   ========================= */
 .resume {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
 }
+
+/* =========================
+   04. 侧边栏样式
+   ========================= */
 .sidebar {
     width: 30%;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    background: linear-gradient(180deg, #d3cfce, #d2bdb8);
-    color: #fff;
     gap: 20px;
     padding: 20px 10px;
+    background: linear-gradient(180deg, #d3cfce, #d2bdb8);
+    color: #fff;
 }
+
 .sidebar .card {
     background: transparent;
     box-shadow: none;
 }
+
 .sidebar p {
     margin: 4px 0;
     font-size: 14px;
 }
-.profile {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-}
-.avatar {
-    width: 120px;
-    height: 120px;
-}
-.avatar img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.name {
-    font-size: 24px;
-    font-weight: bold;
-}
 
-.title {
-    font-size: 14px;
-    color: #7e7b7b;
-    margin-top: 5px;
-}
-
+/* =========================
+   05. 主体内容区样式
+   ========================= */
 .main {
     width: 70%;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
     align-items: stretch;
     padding: 20px;
 }
 
-.row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px 20px;
-}
+/* =========================
+   06. 通用卡片样式
+   ========================= */
 .card {
     background-color: #fff;
     padding: 20px;
@@ -87,38 +135,58 @@ body {
 .card:hover {
     transform: translateY(-3px);
 }
+
+/* =========================
+   07. 头像与个人信息样式
+   ========================= */
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+}
+
+.avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 12px;
+}
+
+.title {
+    font-size: 14px;
+    color: #5f5c5c;
+    margin-top: 6px;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   08. 网格布局样式
+   ========================= */
+.row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 20px;
+}
+
+/* =========================
+   09. 文本、标题、标签基础样式
+   ========================= */
 .label {
     font-weight: 600;
     color: #333;
-}
-
-ul {
-    list-style-type: none;
-    padding-left: 20px;
-}
-
-li {
-    margin: 5px 0;
-    line-height: 1.5;
-}
-a {
-    text-decoration: none;
-    color: blue;
-}
-.sidebar a {
-    display: inline-block;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-a:hover {
-    overflow: visible;
-    text-decoration: underline;
-    color: #007bff;
-}
-a:active {
-    color: #f00;
 }
 
 .section-title {
@@ -139,16 +207,69 @@ a:active {
 .project-name {
     font-size: 16px;
 }
+
 .project-sub {
     font-size: 13px;
     color: #888;
     margin-bottom: 5px;
 }
+
 .time {
     float: right;
     color: #888;
     font-size: 14px;
 }
+
+/* =========================
+   10. 列表样式
+   ========================= */
+ul {
+    list-style-type: none;
+    padding-left: 16px;
+}
+
+li {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+.describe {
+    list-style-type: disc;
+}
+
+.project-links li {
+    margin-bottom: 8px;
+}
+
+/* =========================
+   11. 链接样式
+   ========================= */
+a {
+    text-decoration: none;
+    color: #2463c5;
+}
+
+.sidebar a {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+a:hover {
+    overflow: visible;
+    text-decoration: underline;
+    color: #0f56c3;
+}
+
+a:active {
+    color: #d00;
+}
+
+/* =========================
+   12. 标签与技能条样式
+   ========================= */
 .tags {
     margin: 5px 0 10px;
 }
@@ -180,6 +301,26 @@ a:active {
     border-radius: 3px;
 }
 
+/* =========================
+   13. 项目图片区样式
+   ========================= */
+.project-links-title,
+.project-image-title {
+    margin: 4px 0;
+}
+
+.img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    display: block;
+}
+
+/* =========================
+   14. 时间线样式
+   ========================= */
 .timeline {
     position: relative;
     padding-left: 20px;
@@ -211,24 +352,359 @@ a:active {
     border-radius: 50%;
 }
 
+/* =========================
+   15. 一页投递模式总开关
+   ========================= */
+body.one-page-mode {
+    padding: 0;
+    background: #fff;
+}
+
+body.one-page-mode .action-bar {
+    display: none;
+}
+
+body.one-page-mode .resume {
+    width: 202mm;
+    min-height: 289mm;
+    max-width: 202mm;
+    margin: 0 auto;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+/* =========================
+   16. 一页投递模式 - 侧边栏压缩与配色修复
+   ========================= */
+body.one-page-mode .sidebar {
+    width: 29%;
+    gap: 3px;
+    padding: 5px 6px;
+    justify-content: flex-start;
+    background: #d7ccc8;
+    color: #4e403c;
+    overflow: hidden;
+}
+
+body.one-page-mode .sidebar .card {
+    padding: 5px 7px;
+    margin-bottom: 3px;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+body.one-page-mode .sidebar p,
+body.one-page-mode .sidebar li,
+body.one-page-mode .sidebar a {
+    font-size: 9.5px;
+    line-height: 1.15;
+    margin: 1px 0;
+    color: #5a4b46;
+}
+
+body.one-page-mode .sidebar .name {
+    font-size: 17px;
+    margin-top: 3px;
+    color: #7a6a64;
+}
+
+body.one-page-mode .sidebar .title {
+    font-size: 9px;
+    margin-top: 1px;
+    letter-spacing: 0.4px;
+    color: #6a5b55;
+}
+
+body.one-page-mode .sidebar .section-title {
+    font-size: 13px;
+    margin-bottom: 3px;
+    color: #5a4b46;
+    border-left-color: #5a4b46;
+}
+
+body.one-page-mode .sidebar a {
+    color: #2c5aa0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    word-break: break-all;
+}
+
+body.one-page-mode .avatar {
+    width: 58px;
+    height: 58px;
+}
+
+body.one-page-mode .avatar img {
+    width: 58px;
+    height: 58px;
+}
+
+body.one-page-mode .profile {
+    padding-top: 2px;
+}
+
+/* =========================
+   17. 一页投递模式 - 主体内容压缩
+   ========================= */
+body.one-page-mode .main {
+    width: 71%;
+    display: block;
+    padding: 8px 8px 6px;
+    overflow: hidden;
+}
+
+body.one-page-mode .card {
+    padding: 7px 9px;
+    margin-bottom: 5px;
+    border-radius: 0;
+    box-shadow: none;
+    break-inside: auto;
+    page-break-inside: auto;
+}
+
+body.one-page-mode .education,
+body.one-page-mode .project,
+body.one-page-mode .intern,
+body.one-page-mode .award {
+    break-inside: auto;
+    page-break-inside: auto;
+}
+
+body.one-page-mode .section-title {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+body.one-page-mode .title,
+body.one-page-mode p,
+body.one-page-mode li,
+body.one-page-mode .project-sub,
+body.one-page-mode .time,
+body.one-page-mode a,
+body.one-page-mode .label {
+    font-size: 10.5px;
+    line-height: 1.2;
+}
+
+body.one-page-mode .project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 2px 0;
+}
+
+body.one-page-mode .project-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+body.one-page-mode .time {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 10px;
+    color: #777;
+}
+
+body.one-page-mode .project-sub {
+    margin-bottom: 2px;
+}
+
+body.one-page-mode .tags {
+    margin: 2px 0 4px;
+}
+
+body.one-page-mode .tags span {
+    font-size: 8.5px;
+    padding: 1px 4px;
+    margin: 1px;
+}
+
+body.one-page-mode .row {
+    gap: 2px 8px;
+}
+
+body.one-page-mode ul {
+    padding-left: 13px;
+}
+
+body.one-page-mode li {
+    margin: 1px 0;
+}
+
+body.one-page-mode .timeline-item {
+    margin-bottom: 3px;
+}
+
+/* =========================
+   18. 一页投递模式 - 技能区压缩
+   ========================= */
+body.one-page-mode .skills .tags {
+    margin: 1px 0 3px;
+}
+
+body.one-page-mode .skills span {
+    font-size: 8.5px;
+    padding: 1px 4px;
+    margin: 0;
+}
+
+body.one-page-mode .bar {
+    height: 3px;
+    margin-top: 1px;
+    margin-bottom: 2px;
+}
+
+/* =========================
+   19. 一页投递模式 - 内容保留与裁剪规则
+   说明：
+   - 保留项目截图标题
+   - 保留项目截图
+   - 去掉项目展示标题和链接
+   ========================= */
+body.one-page-mode .hobby,
+body.one-page-mode .school,
+body.one-page-mode .info ul,
+body.one-page-mode .project-links-title,
+body.one-page-mode .project-links,
+body.one-page-mode .award .timeline:nth-of-type(n + 3) {
+    display: none;
+}
+
+body.one-page-mode .describe li:nth-child(n + 5) {
+    display: none;
+}
+
+body.one-page-mode .award {
+    margin-top: 3px;
+}
+
+body.one-page-mode .award .timeline {
+    break-inside: auto;
+    page-break-inside: auto;
+}
+
+body.one-page-mode .project-image-title,
+body.one-page-mode .img {
+    display: block !important;
+}
+
+body.one-page-mode .img {
+    width: 100%;
+    max-height: 92px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+
+/* =========================
+   20. 打印页面基础设置
+   ========================= */
+@page {
+    size: A4 portrait;
+    margin: 10mm;
+}
+
+/* =========================
+   21. 浏览器打印样式
+   ========================= */
 @media print {
     * {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
+
+    html,
     body {
         background: #fff;
+        margin: 0;
+        padding: 0;
     }
 
-    .print-btn {
-        display: none;
+    body {
+        padding: 0;
+    }
+
+    .action-bar {
+        display: none !important;
     }
 
     .resume {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        border-radius: 0;
         box-shadow: none;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .sidebar {
+        width: 30%;
+        background: #d7ccc8 !important;
+        color: #4e403c !important;
+    }
+
+    .main {
+        width: 70%;
     }
 
     .card {
         box-shadow: none;
+        border-radius: 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .education,
+    .project,
+    .intern,
+    .school,
+    .award,
+    .skills,
+    .info,
+    .hobby,
+    .profile {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .img {
+        max-width: 100%;
+        height: auto;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .sidebar,
+    .sidebar p,
+    .sidebar li,
+    .sidebar .title {
+        color: #5a4b46 !important;
+    }
+
+    .sidebar .section-title {
+        color: #5a4b46 !important;
+        border-left-color: #5a4b46 !important;
+    }
+
+    .sidebar .name {
+        color: #7a6a64 !important;
+    }
+
+    .sidebar a {
+        color: #2c5aa0 !important;
+        text-decoration: none;
+    }
+
+    a {
+        color: #000;
+        text-decoration: none;
     }
 }
