@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="../css/Visualization_Of_Sorting_Algorithms.css"
+        />
+        <title>排序算法可视化</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1>排序算法可视化</h1>
+        </header>
+        <nav class="nav h_nav">
+            <ul>
+                <li><a href="#createData">生成数组</a></li>
+                <li><a href="#bubble">冒泡排序</a></li>
+                <li><a href="#insertion">插入排序</a></li>
+                <li><a href="#selection">选择排序</a></li>
+                <li><a href="#performance">算法性能比较</a></li>
+            </ul>
+        </nav>
+        <main class="main">
+            <nav class="nav v_nav l_nav">
+                <ul>
+                    <li><a href="#createData">生成数组</a></li>
+                    <li><a href="#bubble">冒泡排序</a></li>
+                    <li><a href="#insertion">插入排序</a></li>
+                    <li><a href="#selection">选择排序</a></li>
+                    <li><a href="#performance">算法性能比较</a></li>
+                </ul>
+            </nav>
+            <section class="content">
+                <section class="createData card" id="createData">
+                    <div class="input">
+                        <div>
+                            <label for="sizeInput">size = </label>
+                            <input
+                                type="text"
+                                id="sizeInput"
+                                name="sizeInput"
+                                placeholder="请输入数组大小..."
+                                title="请输入数组大小..."
+                            />
+                        </div>
+                        <div>
+                            <label for="time">gap = </label>
+                            <input
+                                type="text"
+                                id="time"
+                                name="time"
+                                placeholder="请输入间隔时间,默认为100ms..."
+                                title="请输入间隔时间,默认为100ms..."
+                            />
+                            <label for="time">ms</label>
+                        </div>
+                        <button class="create">生成数组</button>
+                    </div>
+                    <div class="visualization" id="array-visualization"></div>
+                </section>
+
+                <section class="sort card" id="bubble">
+                    <h2>冒泡排序</h2>
+                    <div class="description">
+                        <p>
+                            <strong>算法原理：</strong>
+                            冒泡排序通过多轮遍历数组，依次比较相邻元素并在顺序错误时进行交换，每一轮都会将当前最大元素“冒泡”到末尾，从而逐步形成有序区。
+                        </p>
+                        <p>
+                            <strong>可视化实现：</strong>
+                            将数组映射为柱状图，通过记录“比较、交换、已排序”等步骤并依次播放，实现排序过程动态展示。交换过程基于
+                            FLIP 动画与 DOM 重排，使柱子移动更加平滑。
+                        </p>
+                        <p>
+                            <strong>技术与思想：</strong>
+                            基于 HTML/CSS/JavaScript 实现，采用“步骤驱动 +
+                            状态驱动”设计，将排序过程拆分为独立动作并统一调度，通过
+                            async/await 控制动画流程，实现可暂停与可恢复执行。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="bubble">
+                            开始排序
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
+                    <div class="visualization" id="bubble-visualization"></div>
+                </section>
+
+                <section class="sort card" id="insertion">
+                    <h2>插入排序</h2>
+                    <div class="description">
+                        <p>
+                            <strong>算法原理：</strong>
+                            插入排序将数组划分为已排序区和未排序区，每次从未排序区取出一个元素，插入到已排序区的正确位置，从而逐步完成排序。
+                        </p>
+                        <p>
+                            <strong>可视化实现：</strong>
+                            采用三区模型（已排序区 / 待排序区 / 缓冲区），引入
+                            tmpBar 与 floatingBar 表示空位与待插入元素，通过
+                            toBuffer、shift、insertBack
+                            三类动作完整还原插入过程，实现逻辑与视觉一致。
+                        </p>
+                        <p>
+                            <strong>技术与思想：</strong>
+                            基于状态驱动与角色建模，将抽象“空位移动”转化为真实
+                            DOM
+                            操作，保证数据与动画同步，体现算法过程向可视化系统建模的思想。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="insertion">
+                            开始排序
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
+                    <div
+                        class="visualization"
+                        id="insertion-visualization"
+                    ></div>
+                </section>
+
+                <section class="sort card" id="selection">
+                    <h2>选择排序</h2>
+                    <div class="description">
+                        <p>
+                            <strong>算法原理：</strong>
+                            选择排序在每一轮中从未排序区选出最小元素，并交换到起始位置，从而逐步扩大有序区。
+                        </p>
+                        <p>
+                            <strong>可视化实现：</strong>
+                            通过高亮当前最小值并在遍历中动态更新，展示“选择最值”的过程；当确定最小值后，通过交换动画将其移动到正确位置，并标记为已排序。
+                        </p>
+                        <p>
+                            <strong>技术与思想：</strong>
+                            将“选择、比较、交换、标记”等操作拆分为独立步骤，通过统一动画引擎执行，实现算法逻辑与展示逻辑解耦，提高系统复用性。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="selection">
+                            开始排序
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
+                    <div
+                        class="visualization"
+                        id="selection-visualization"
+                    ></div>
+                </section>
+
+                <section class="sort card" id="performance">
+                    <h2>算法性能比较</h2>
+                    <div class="description">
+                        <p>
+                            <strong>比较内容：</strong>
+                            对冒泡排序、插入排序和选择排序进行同步可视化对比，并统计纯算法时间、步骤生成时间、动画展示时间，以及比较次数、交换/移动次数等多维性能指标。
+                        </p>
+                        <p>
+                            <strong>实现方式：</strong>
+                            为每种算法提供独立数据副本与视口，分别执行纯算法计时、步骤生成和动画播放，并将结果以表格和柱状图形式统一展示，构建三层性能分析体系。
+                        </p>
+                        <p>
+                            <strong>同步与异步：</strong>
+                            纯算法部分采用同步执行保证计时准确；动画部分基于
+                            async/await 控制执行顺序，并通过 Promise.all
+                            实现多视口并发播放，保证比较过程同步进行。
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button class="start" data-type="performance">
+                            开始比较
+                        </button>
+                        <button class="pause">暂停</button>
+                        <button class="resume">继续</button>
+                    </div>
+                    <div class="container" id="performance-visualization">
+                        <div class="row">
+                            <section class="col perf-item">
+                                <h3>冒泡排序</h3>
+                                <div
+                                    class="perf-visualization item-visualization"
+                                    id="performance-bubble"
+                                ></div>
+                            </section>
+                            <section class="col perf-item">
+                                <h3>插入排序</h3>
+                                <div
+                                    class="perf-visualization item-visualization"
+                                    id="performance-insertion"
+                                ></div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col perf-item">
+                                <h3>选择排序</h3>
+                                <div
+                                    class="perf-visualization item-visualization"
+                                    id="performance-selection"
+                                ></div>
+                            </section>
+                            <section class="col perf-item">
+                                <h3>性能图表</h3>
+                                <div
+                                    class="visualization_result item-visualization"
+                                    id="performance-chart"
+                                ></div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <nav class="nav v_nav r_nav">
+                <ul>
+                    <li><a href="#createData">生成数组</a></li>
+                    <li><a href="#bubble">冒泡排序</a></li>
+                    <li><a href="#insertion">插入排序</a></li>
+                    <li><a href="#selection">选择排序</a></li>
+                    <li><a href="#performance">算法性能比较</a></li>
+                </ul>
+            </nav>
+        </main>
+        <footer class="footer">
+            <address>
+                CSDN博客地址：<a
+                    href="https://blog.csdn.net/2301_79458548"
+                    target="_blank"
+                    >蒙奇D索大: https://blog.csdn.net/2301_79458548</a
+                >
+            </address>
+            <address>
+                51CTO博客地址：<a
+                    href="https://blog.51cto.com/u_16231477"
+                    target="_blank"
+                    >蒙奇D索隆: https://blog.51cto.com/u_16231477</a
+                >
+            </address>
+            <address>
+                腾讯云社区博客地址：<a
+                    href="https://cloud.tencent.com/developer/user/10787339"
+                    target="_blank"
+                    >蒙奇D索隆:
+                    https://cloud.tencent.com/developer/user/10787339</a
+                >
+            </address>
+            <address>
+                gitee仓库地址：<a
+                    href="https://gitee.com/Li_2023-9-13"
+                    target="_blank"
+                    >小李爱编码: https://gitee.com/Li_2023-9-13</a
+                >
+            </address>
+            <address>
+                github仓库地址：<a
+                    href="https://github.com/LiQian2023"
+                    target="_blank"
+                    >LiQian2023: https://github.com/LiQian2023</a
+                >
+            </address>
+        </footer>
+        <script src="../js/Visualization_Of_Sorting_Algorithms.js"></script>
+    </body>
+</html>
